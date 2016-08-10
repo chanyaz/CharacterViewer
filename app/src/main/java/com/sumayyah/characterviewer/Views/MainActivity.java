@@ -1,4 +1,4 @@
-package com.sumayyah.characterviewer;
+package com.sumayyah.characterviewer.Views;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -6,6 +6,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toolbar;
+
+import com.sumayyah.characterviewer.R;
 
 public class MainActivity extends Activity {
 

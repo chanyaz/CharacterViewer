@@ -9,16 +9,9 @@
         android:id="@+id/toolbar"
         layout="@layout/toolbar" />
 
-    <!--<android.support.v7.widget.RecyclerView-->
-        <!--android:id="@+id/list"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:background="#f8f8f8"-->
-        <!--android:divider="@null"-->
-        <!--android:listSelector="@android:color/transparent"/>-->
 
-    <fragment class="com.sumayyah.characterviewer.Views.ListFragment"
-        android:id="@+id/list_fragment"
+    <FrameLayout
+        android:id="@+id/list_fragment_holder"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 

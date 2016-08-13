@@ -25,7 +25,6 @@ public class DataManager {
             Character c = new Character();
 
             String jsonText = "Barney Gumble  - Barnard \"Barney\" Gumble is a fictional character on the American animated sitcom The Simpsons. The character is voiced by Dan Castellaneta and first appeared in the series premiere episode \"Simpsons Roasting on an Open Fire\".";
-
             c.setCharacterNameAndDetails(jsonText);
             c.setCharacterPicURL("https://duckduckgo.com/i/7b1c968b.png");
 

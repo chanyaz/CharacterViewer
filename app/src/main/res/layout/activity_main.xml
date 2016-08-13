@@ -9,7 +9,6 @@
         android:id="@+id/toolbar"
         layout="@layout/toolbar" />
 
-
     <FrameLayout
         android:id="@+id/list_fragment_holder"
         android:layout_width="match_parent"

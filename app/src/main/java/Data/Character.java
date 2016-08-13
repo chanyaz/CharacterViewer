@@ -1,7 +1,5 @@
 package Data;
 
-import com.sumayyah.characterviewer.Views.Console;
-
 /**
  * Created by sumayyah on 8/10/16.
  */
@@ -37,9 +35,6 @@ public class Character {
 
         String name = array[0];
         String desc = array[1];
-
-        Console.log("Name is "+name);
-        Console.log("Desc is "+desc);
 
         this.characterName = name;
         this.characterDescription = desc;

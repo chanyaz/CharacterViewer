@@ -3,27 +3,24 @@ package com.sumayyah.characterviewer.Views;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.FrameLayout;
 import android.widget.Toolbar;
 
 import com.sumayyah.characterviewer.R;
 
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements ListFragment.ListItemClickListener {
 
     private Toolbar toolbar;
     private Menu menu;
     private boolean isList;
-    private SpanCountInterface spanCountInterface;
-
-    private Bundle bundle;
+    private boolean isTablet;
     private FragmentManager fragmentManager;
-    private FragmentTransaction fragmentTransaction;
-    private Fragment currentFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,20 +29,43 @@ public class MainActivity extends Activity {
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setUpActionBar();
+        isTablet = false;
+
+        if(savedInstanceState != null) {
+            return;
+        }
 
         fragmentManager = getFragmentManager();
-        currentFragment = new ListFragment();
-        spanCountInterface = (SpanCountInterface) currentFragment;
 
-//        if(savedInstanceState != null) {
-            fragmentManager.beginTransaction().replace(R.id.list_fragment_holder, currentFragment).commit();
-//        }
+        createRelevantViews();
 
-
-//        Intent intent = new Intent(this, DetailActivity.class);
-//        startActivity(intent);
-
+        //TODO check rotations
         isList = true;
+    }
+
+    private void createRelevantViews() {
+
+        //Initialize list fragment for both views
+        ListFragment listFragment = (ListFragment) fragmentManager.findFragmentByTag(getString(R.string.list_fragment_tag));
+        if(listFragment == null) {
+
+            listFragment = new ListFragment();
+            Console.log("Creating new list fragment in main");
+            fragmentManager.beginTransaction().replace(R.id.list_fragment_holder, listFragment, getString(R.string.list_fragment_tag)).commit();
+        }
+
+        //If is tablet, activate detail panel
+        if(findViewById(R.id.detail_fragment_holder) != null) {
+            Console.log("Setting up detail view in main, for tablets");
+            isTablet = true;
+
+            DetailFragment detailFragment = (DetailFragment) fragmentManager.findFragmentByTag(getString(R.string.detail_fragment_tag));
+            if(detailFragment == null) {
+                detailFragment = new DetailFragment();
+                fragmentManager.beginTransaction().replace(R.id.detail_fragment_holder, detailFragment, getString(R.string.detail_fragment_tag)).commit();
+            }
+            //listFragment.setFirstItemSelected();
+        }
     }
 
     private void setUpActionBar() {
@@ -79,33 +99,50 @@ public class MainActivity extends Activity {
 
     private void toggle() {
         MenuItem item = menu.findItem(R.id.action_toggle);
+        ListFragment listFragment = (ListFragment) getFragmentManager().findFragmentById(R.id.list_fragment_holder);
+
         if (isList) {
-            spanCountInterface.onGridSelected();
+          //TODO check if visible
+            listFragment.gridSelected();
             item.setIcon(R.drawable.ic_view_list);
-            item.setTitle("Show as list");
+            item.setTitle(getString(R.string.toggle_show_list));
             isList = false;
         } else {
-            spanCountInterface.onListSelected();
+            listFragment.listSelected();
             item.setIcon(R.drawable.ic_view_grid);
-            item.setTitle("Show as grid");
+            item.setTitle(getString(R.string.toggle_show_grid));
             isList = true;
         }
-    }
-
-    public interface SpanCountInterface {
-        void onGridSelected();
-        void onListSelected();
     }
 
     @Override
     protected void onPause() {
        super.onPause();
-        Console.log("on pause in main");
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        Console.log("On resume in main");
+    }
+
+    @Override
+    public void onListItemSelected(int position) {
+        Console.log("Main got selected item "+position);
+
+        if(!isTablet) {
+
+            //Detail fragment is not in the phone layout, so start separate Activity
+            //Include index of selected Character
+            Intent intent = new Intent(this, DetailActivity.class);
+            intent.putExtra("position", position);
+            startActivity(intent);
+
+        } else {
+            //Detail fragment exists in tablet layout
+            DetailFragment detailFragment = new DetailFragment();
+            getFragmentManager().beginTransaction().replace(R.id.detail_fragment_holder, detailFragment).commit();
+            Bundle bundle = new Bundle();
+            bundle.putInt("position", position);
+            detailFragment.setArguments(bundle);        }
     }
 }

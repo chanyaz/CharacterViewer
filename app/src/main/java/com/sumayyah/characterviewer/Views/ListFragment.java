@@ -15,51 +15,38 @@ import Adapters.CharacterListAdapter;
 /**
  * Created by sumayyah on 8/10/16.
  */
-public class ListFragment extends Fragment implements MainActivity.SpanCountInterface {
+public class ListFragment extends Fragment {
 
 
     private static final String KEY_LAYOUT_MANAGER = "layoutManager";
+    private static final int LIST_VIEW = 1;
+    private static final int GRID_VIEW = 2;
 
     private RecyclerView list;
     private StaggeredGridLayoutManager staggeredGridLayoutManager;
     private CharacterListAdapter adapter;
     private View v;
-
+    private ListItemClickListener listItemClickListener;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         v = inflater.inflate(R.layout.list_fragment_layout, container, false);
-
-        Console.log("STarting fragment with list fragment");
+        listItemClickListener = (ListItemClickListener) getActivity();
 
         //Setup view
         list = (RecyclerView) v.findViewById(R.id.list);
-        staggeredGridLayoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
-
-
-        if (savedInstanceState != null) {
-            // Restore saved layout manager type.
-            //TODO save span
-//            currentLayoutManagerType = (DataManager.LayoutManagerType) savedInstanceState
-//                    .getSerializable(KEY_LAYOUT_MANAGER);
-        }
+        staggeredGridLayoutManager = new StaggeredGridLayoutManager(LIST_VIEW, StaggeredGridLayoutManager.VERTICAL);
 
         list.setLayoutManager(staggeredGridLayoutManager);
-        adapter = new CharacterListAdapter(getActivity(), itemClickListener);
+        adapter = new CharacterListAdapter(getActivity(), listItemClickListener);
         list.setAdapter(adapter);
 
         Console.log("Created fragment, set up list and adapter ");
 
         return v;
     }
-
-    private View.OnClickListener itemClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-        }
-    };
 
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
@@ -69,14 +56,19 @@ public class ListFragment extends Fragment implements MainActivity.SpanCountInte
         super.onSaveInstanceState(savedInstanceState);
     }
 
-    @Override
-    public void onGridSelected() {
-        staggeredGridLayoutManager.setSpanCount(2);
+    public interface ListItemClickListener {
+        void onListItemSelected(int position);
     }
 
-    @Override
-    public void onListSelected() {
-        staggeredGridLayoutManager.setSpanCount(1);
+    public void gridSelected() {
+        staggeredGridLayoutManager.setSpanCount(GRID_VIEW);
     }
 
+    public void listSelected() {
+        staggeredGridLayoutManager.setSpanCount(LIST_VIEW);
+    }
+
+    public void setFirstItemSelected() {
+        listItemClickListener.onListItemSelected(0);
+    }
 }

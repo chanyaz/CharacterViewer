@@ -1,6 +1,8 @@
 package com.sumayyah.characterviewer.Views;
 
 import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -20,13 +22,7 @@ import Adapters.CharacterListAdapter;
 public class DetailActivity extends Activity {
 
     private Toolbar toolbar;
-    private RecyclerView list;
-    private StaggeredGridLayoutManager staggeredGridLayoutManager;
-    private GridLayoutManager gridLayoutManager;
-    private CharacterListAdapter adapter;
-
-    private Menu menu;
-    private boolean isList;
+    private DetailFragment detailFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,24 +34,21 @@ public class DetailActivity extends Activity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setUpActionBar();
 
-        //Setup view
-        list = (RecyclerView) findViewById(R.id.list);
-        list.setHasFixedSize(true);
-        staggeredGridLayoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
-        gridLayoutManager = new GridLayoutManager(this, 1);
-        list.setLayoutManager(gridLayoutManager);
+        if(savedInstanceState == null) {
 
-        adapter = new CharacterListAdapter(this);
-        list.setAdapter(adapter);
-
-        isList = true;
+            detailFragment = new DetailFragment();
+            Bundle bundle = new Bundle();
+            bundle.putInt("position", getIntent().getIntExtra("position",0));
+            detailFragment.setArguments(bundle);
+            getFragmentManager().beginTransaction().replace(R.id.detail_fragment_holder, detailFragment, "Detail").commit();
+        }
     }
 
     private void setUpActionBar() {
 
         if (toolbar != null) {
             setActionBar(toolbar);
-            getActionBar().setDisplayHomeAsUpEnabled(false);
+            getActionBar().setDisplayHomeAsUpEnabled(true);
             getActionBar().setDisplayShowTitleEnabled(true);
             getActionBar().setElevation(7);
         }
@@ -66,7 +59,6 @@ public class DetailActivity extends Activity {
         // Inflate the menu; this adds items to the action bar if it is present.
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_main, menu);
-        this.menu = menu;
         return true;
     }
 
@@ -74,26 +66,13 @@ public class DetailActivity extends Activity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_toggle) {
-            toggle();
+
+            DetailFragment detailFragment = (DetailFragment) getFragmentManager().findFragmentByTag("Detail");
+            Console.log("Detail fragment "+detailFragment);
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    private void toggle() {
-        MenuItem item = menu.findItem(R.id.action_toggle);
-        if (isList) {
-            gridLayoutManager.setSpanCount(2);
-            item.setIcon(R.drawable.ic_view_list);
-            item.setTitle("Show as list");
-            isList = false;
-            adapter.notifyDataSetChanged();
-        } else {
-            gridLayoutManager.setSpanCount(1);
-            item.setIcon(R.drawable.ic_view_grid);
-            item.setTitle("Show as grid");
-            isList = true;
-            adapter.notifyDataSetChanged();
-        }
-    }
+
 }

@@ -39,4 +39,8 @@ public class Character {
         this.characterName = name;
         this.characterDescription = desc;
     }
+
+    public String printDetails() {
+        return "Character: "+characterName+" Desc: "+characterDescription+" at URL: "+characterPicURL;
+    }
 }

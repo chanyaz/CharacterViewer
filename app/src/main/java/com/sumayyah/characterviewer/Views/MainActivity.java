@@ -1,20 +1,20 @@
 package com.sumayyah.characterviewer.Views;
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.FrameLayout;
 import android.widget.Toolbar;
 
 import com.sumayyah.characterviewer.R;
 
+import Managers.NetworkManager;
 
-public class MainActivity extends Activity implements ListFragment.ListItemClickListener {
+
+public class MainActivity extends Activity implements ListFragment.ListItemClickListener, NetworkManager.NetworkOpsCompleteListener {
 
     private Toolbar toolbar;
     private Menu menu;
@@ -31,16 +31,18 @@ public class MainActivity extends Activity implements ListFragment.ListItemClick
         setUpActionBar();
         isTablet = false;
 
-        if(savedInstanceState != null) {
-            return;
-        }
+        new NetworkManager(this).executeAPICall();
 
-        fragmentManager = getFragmentManager();
-
-        createRelevantViews();
-
-        //TODO check rotations
-        isList = true;
+//        if(savedInstanceState != null) {
+//            return;
+//        }
+//
+//        fragmentManager = getFragmentManager();
+//
+//        createRelevantViews();
+//
+//        //TODO check rotations
+//        isList = true;
     }
 
     private void createRelevantViews() {
@@ -143,6 +145,12 @@ public class MainActivity extends Activity implements ListFragment.ListItemClick
             getFragmentManager().beginTransaction().replace(R.id.detail_fragment_holder, detailFragment).commit();
             Bundle bundle = new Bundle();
             bundle.putInt("position", position);
-            detailFragment.setArguments(bundle);        }
+            detailFragment.setArguments(bundle);
+        }
+    }
+
+    @Override
+    public void onNetworkOpsComplete() {
+        Console.log("Main- network ops complete");
     }
 }

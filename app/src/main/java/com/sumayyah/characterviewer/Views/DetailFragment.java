@@ -54,6 +54,6 @@ public class DetailFragment extends Fragment {
 
         characterName.setText(c.getName());
         characterDetails.setText(c.getDescription());
-        Picasso.with(getActivity()).load(c.getImageURL()).placeholder(R.drawable.ic_view_grid).into(profilePic);
+//        Picasso.with(getActivity()).load(c.getImageURL()).placeholder(R.drawable.ic_view_grid).into(profilePic);
     }
 }

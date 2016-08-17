@@ -37,12 +37,12 @@ public class MainActivity extends Activity implements ListFragment.ListItemClick
 //            return;
 //        }
 //
-//        fragmentManager = getFragmentManager();
+        fragmentManager = getFragmentManager();
 //
 //        createRelevantViews();
 //
 //        //TODO check rotations
-//        isList = true;
+        isList = true;
     }
 
     private void createRelevantViews() {
@@ -152,5 +152,6 @@ public class MainActivity extends Activity implements ListFragment.ListItemClick
     @Override
     public void onNetworkOpsComplete() {
         Console.log("Main- network ops complete");
+        createRelevantViews();
     }
 }

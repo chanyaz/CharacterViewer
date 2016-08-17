@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 import com.sumayyah.characterviewer.R;
+import com.sumayyah.characterviewer.Views.Console;
 import com.sumayyah.characterviewer.Views.ListFragment;
 
 import Model.Character;
@@ -45,6 +46,7 @@ public class CharacterListAdapter extends RecyclerView.Adapter<CharacterListAdap
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        Console.log("Creating viewholder");
 
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_fragment_item_layout, parent, false);
         return new ViewHolder(view);
@@ -52,24 +54,25 @@ public class CharacterListAdapter extends RecyclerView.Adapter<CharacterListAdap
 
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
+        Console.log("Binding viewholder");
 
-//        Character c = new DataManager().getList().get(position);
-//        holder.characterName.setText(c.getName());
+        Character c = DataManager.getInstance().getList().get(position);
+        holder.characterName.setText(c.getName());
 //        Picasso.with(context).load(c.getImageURL()).placeholder(R.drawable.ic_view_grid).into(holder.profilePic);
-//
-//        holder.cardContentLayout.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                listItemClickListener.onListItemSelected(position);
-//            }
-//        });
+
+        holder.cardContentLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listItemClickListener.onListItemSelected(position);
+            }
+        });
     }
 
     @Override
     public int getItemCount() { //TODO Create singleton
-        //int size = new DataManager().getList().size();
-//        Console.log("Num items "+size);
-        return 0;
+        int size = DataManager.getInstance().getList().size();
+        Console.log("Num items "+size);
+        return size;
     }
 
 

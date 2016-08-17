@@ -1,7 +1,6 @@
 package Network;
 
-import com.sumayyah.characterviewer.Views.App;
-
+import Managers.DataManager;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -12,7 +11,7 @@ public class RetrofitBuilder {
 
     public Retrofit getRetrofitBuilder() {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(App.dataManager.getBaseUrl())
+                .baseUrl(DataManager.getInstance().getBaseUrl())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 

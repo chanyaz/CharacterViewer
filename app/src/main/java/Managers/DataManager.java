@@ -33,6 +33,7 @@ public class DataManager {
             Character c = new Character(relatedTopic);
             if(!characterList.contains(c)) {
                 characterList.add(c);
+                Console.log("Added "+c.toString());
             }
         }
         listCompleteListener.onListPopulateComplete();
@@ -48,6 +49,7 @@ public class DataManager {
 //    }
 
     public ArrayList<Character> getList() {
+        Console.log("DataMager - returning "+characterList.size()+" items");
         return characterList;
     }
 

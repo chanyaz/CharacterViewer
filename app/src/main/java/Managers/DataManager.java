@@ -1,8 +1,4 @@
 package Managers;
-
-
-import com.sumayyah.characterviewer.Views.Console;
-
 import java.util.ArrayList;
 
 import Model.APIResponse;
@@ -28,12 +24,10 @@ public class DataManager {
 
     public void populateList(APIResponse apiResponse, ListCompleteListener listCompleteListener) {
 
-        Console.log("Populating list");
         for(RelatedTopic relatedTopic: apiResponse.getRelatedTopics()) {
             Character c = new Character(relatedTopic);
             if(!characterList.contains(c)) {
                 characterList.add(c);
-                Console.log("Added "+c.toString());
             }
         }
         listCompleteListener.onListPopulateComplete();
@@ -43,31 +37,12 @@ public class DataManager {
         void onListPopulateComplete();
     }
 
-//    public DataManager() {
-//        characterList = new ArrayList<>();
-//        populate();
-//    }
 
     public ArrayList<Character> getList() {
-        Console.log("DataMager - returning "+characterList.size()+" items");
         return characterList;
     }
 
     public String getBaseUrl() {
         return BASE_URL;
     }
-
-//    private void populate() {
-//
-//        for(int i=0; i<15; i++) {
-//            Character c = new Character();
-//
-//            String jsonText = "Barney Gumble  - Barnard \"Barney\" Gumble is a fictional character on the American animated sitcom The Simpsons. The character is voiced by Dan Castellaneta and first appeared in the series premiere episode \"Simpsons Roasting on an Open Fire\".";
-//            c.setCharacterNameAndDetails(jsonText);
-//            c.setImageURL("https://duckduckgo.com/i/7b1c968b.png");
-//
-//            characterList.add(c);
-//        }
-//    }
-
 }

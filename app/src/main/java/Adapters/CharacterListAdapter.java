@@ -46,7 +46,6 @@ public class CharacterListAdapter extends RecyclerView.Adapter<CharacterListAdap
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        Console.log("Creating viewholder");
 
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_fragment_item_layout, parent, false);
         return new ViewHolder(view);
@@ -54,7 +53,6 @@ public class CharacterListAdapter extends RecyclerView.Adapter<CharacterListAdap
 
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
-        Console.log("Binding viewholder");
 
         Character c = DataManager.getInstance().getList().get(position);
         holder.characterName.setText(c.getName());

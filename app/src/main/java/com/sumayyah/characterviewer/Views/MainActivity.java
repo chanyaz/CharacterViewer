@@ -34,6 +34,7 @@ public class MainActivity extends Activity implements ListFragment.ListItemClick
         new NetworkManager(this, getString(R.string.base_api_url)).executeAPICall();
 
         fragmentManager = getFragmentManager();
+        createRelevantViews();
 
       //TODO check rotations
         isList = true;
@@ -74,9 +75,12 @@ public class MainActivity extends Activity implements ListFragment.ListItemClick
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_main, menu);
-        this.menu = menu;
+
+        if(!isTablet) {
+            MenuInflater inflater = getMenuInflater();
+            inflater.inflate(R.menu.menu_main, menu);
+            this.menu = menu;
+        }
         return true;
     }
 
@@ -142,6 +146,14 @@ public class MainActivity extends Activity implements ListFragment.ListItemClick
     @Override
     public void onNetworkOpsComplete() {
         Console.log("Main- network ops complete");
-        createRelevantViews();
+
+        //Refresh UI to reflect that all data is available now
+        ListFragment listFragment = (ListFragment) getFragmentManager().findFragmentById(R.id.list_fragment_holder);
+        listFragment.update();
+
+        if(isTablet) {
+            DetailFragment detailFragment = (DetailFragment) fragmentManager.findFragmentByTag(getString(R.string.detail_fragment_tag));
+            detailFragment.refreshUI(0);
+        }
     }
 }

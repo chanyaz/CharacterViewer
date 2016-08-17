@@ -45,15 +45,17 @@ public class DetailFragment extends Fragment {
         return v;
     }
 
-    private void refreshUI(int position) {
+    public void refreshUI(int position) {
 
         Console.log("setting detail UI with position "+position);
 
-        Character c = new DataManager().getList().get(position); //TODO singleton
+        if(DataManager.getInstance().getList().size() > 0) {
+            Character c = DataManager.getInstance().getList().get(position);
 //        Console.log(c.printDetails());
 
-        characterName.setText(c.getName());
-        characterDetails.setText(c.getDescription());
+            characterName.setText(c.getName());
+            characterDetails.setText(c.getDescription());
 //        Picasso.with(getActivity()).load(c.getImageURL()).placeholder(R.drawable.ic_view_grid).into(profilePic);
+        }
     }
 }

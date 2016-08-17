@@ -21,7 +21,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".Views.DetailActivity"
-            android:label="@string/APP_NAME">
+            android:label="@string/APP_NAME"
+            android:parentActivityName=".Views.MainActivity">
         </activity>
 
     </application>

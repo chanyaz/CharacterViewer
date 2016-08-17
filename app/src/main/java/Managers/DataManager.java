@@ -36,7 +36,6 @@ public class DataManager {
         void onListPopulateComplete();
     }
 
-
     public ArrayList<Character> getList() {
         return characterList;
     }

@@ -68,7 +68,8 @@ public class ListFragment extends Fragment {
         staggeredGridLayoutManager.setSpanCount(LIST_VIEW);
     }
 
-    public void setFirstItemSelected() {
-        listItemClickListener.onListItemSelected(0);
+    public void update() {
+        Console.log("List - updating adapter");
+        adapter.notifyDataSetChanged();
     }
 }

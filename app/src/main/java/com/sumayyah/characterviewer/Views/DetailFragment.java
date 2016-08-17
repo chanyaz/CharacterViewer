@@ -11,8 +11,8 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 import com.sumayyah.characterviewer.R;
 
-import Data.Character;
-import Data.DataManager;
+import Model.Character;
+import Managers.DataManager;
 
 /**
  * Created by sumayyah on 8/10/16.
@@ -50,10 +50,10 @@ public class DetailFragment extends Fragment {
         Console.log("setting detail UI with position "+position);
 
         Character c = new DataManager().getList().get(position); //TODO singleton
-        Console.log(c.printDetails());
+//        Console.log(c.printDetails());
 
-        characterName.setText(c.getCharacterName());
-        characterDetails.setText(c.getCharacterDescription());
-        Picasso.with(getActivity()).load(c.getCharacterPicURL()).placeholder(R.drawable.ic_view_grid).into(profilePic);
+        characterName.setText(c.getName());
+        characterDetails.setText(c.getDescription());
+        Picasso.with(getActivity()).load(c.getImageURL()).placeholder(R.drawable.ic_view_grid).into(profilePic);
     }
 }

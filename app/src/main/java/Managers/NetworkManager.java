@@ -1,7 +1,5 @@
 package Managers;
-
 import com.sumayyah.characterviewer.Views.Console;
-import com.sumayyah.characterviewer.Views.MainActivity;
 
 import Model.APIResponse;
 import Network.APIService;
@@ -16,14 +14,15 @@ import retrofit2.Response;
 public class NetworkManager {
 
     private NetworkOpsCompleteListener networkOpsCompleteListener;
+    private static String BASE_URL= null;
 
-    public NetworkManager(NetworkOpsCompleteListener networkOpsCompleteListener) {
+    public NetworkManager(NetworkOpsCompleteListener networkOpsCompleteListener, String baseUrl) {
         this.networkOpsCompleteListener = networkOpsCompleteListener;
+        this.BASE_URL = baseUrl;
     }
 
     public void executeAPICall() {
 
-        Console.log("Calling API");
         APIService apiService = new RetrofitBuilder().getRetrofitBuilder().create(APIService.class);
         Call<APIResponse> call = apiService.getApiResponse();
         call.enqueue(callback);
@@ -32,11 +31,7 @@ public class NetworkManager {
     private Callback<APIResponse> callback = new Callback<APIResponse>() {
         @Override
         public void onResponse(Call<APIResponse> call, Response<APIResponse> response) {
-            Console.log("App - Response was "+response.toString());
-            Console.log("Parsing response body "+response.body().toString());
-            Console.log("Hmmm "+response.body().getRelatedTopics().size()+" code "+response.code());
             APIResponse apiResponse = response.body();
-
             DataManager.getInstance().populateList(apiResponse, listCompleteListener);
         }
 
@@ -50,12 +45,15 @@ public class NetworkManager {
     private DataManager.ListCompleteListener listCompleteListener = new DataManager.ListCompleteListener() {
         @Override
         public void onListPopulateComplete() {
-            Console.log("Finished populating list "+DataManager.getInstance().getList().size());
             networkOpsCompleteListener.onNetworkOpsComplete();
         }
     };
 
     public interface NetworkOpsCompleteListener {
         void onNetworkOpsComplete();
+    }
+
+    public static String getBaseURL() {
+        return BASE_URL;
     }
 }

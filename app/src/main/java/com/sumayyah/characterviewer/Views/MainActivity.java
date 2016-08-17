@@ -31,17 +31,11 @@ public class MainActivity extends Activity implements ListFragment.ListItemClick
         setUpActionBar();
         isTablet = false;
 
-        new NetworkManager(this).executeAPICall();
+        new NetworkManager(this, getString(R.string.base_api_url)).executeAPICall();
 
-//        if(savedInstanceState != null) {
-//            return;
-//        }
-//
         fragmentManager = getFragmentManager();
-//
-//        createRelevantViews();
-//
-//        //TODO check rotations
+
+      //TODO check rotations
         isList = true;
     }
 
@@ -52,13 +46,11 @@ public class MainActivity extends Activity implements ListFragment.ListItemClick
         if(listFragment == null) {
 
             listFragment = new ListFragment();
-            Console.log("Creating new list fragment in main");
             fragmentManager.beginTransaction().replace(R.id.list_fragment_holder, listFragment, getString(R.string.list_fragment_tag)).commit();
         }
 
         //If is tablet, activate detail panel
         if(findViewById(R.id.detail_fragment_holder) != null) {
-            Console.log("Setting up detail view in main, for tablets");
             isTablet = true;
 
             DetailFragment detailFragment = (DetailFragment) fragmentManager.findFragmentByTag(getString(R.string.detail_fragment_tag));
@@ -66,7 +58,6 @@ public class MainActivity extends Activity implements ListFragment.ListItemClick
                 detailFragment = new DetailFragment();
                 fragmentManager.beginTransaction().replace(R.id.detail_fragment_holder, detailFragment, getString(R.string.detail_fragment_tag)).commit();
             }
-            //listFragment.setFirstItemSelected();
         }
     }
 
@@ -129,7 +120,6 @@ public class MainActivity extends Activity implements ListFragment.ListItemClick
 
     @Override
     public void onListItemSelected(int position) {
-        Console.log("Main got selected item "+position);
 
         if(!isTablet) {
 

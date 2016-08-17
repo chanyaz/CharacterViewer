@@ -30,14 +30,14 @@ android {
 
             applicationId "com.xfinity.simpsonsviewer"
             resValue "string", "APP_NAME", "Simpsons Character Viewer"
-            buildConfigField 'String', 'DATA_API', '"http://api.duckduckgo.com/?q=simpsons+characters&format=json"'
+            buildConfigField 'String', 'API_PARAMS', '"?q=simpsons+characters&format=json"'
         }
 
         starWars {
 
             applicationId "com.xfinity.gotviewer"
             resValue "string", "APP_NAME", "Star Wars Character Viewer"
-            buildConfigField 'String', 'DATA_API', '"http://api.duckduckgo.com/?q=star+wars+characters&format=json"'
+            buildConfigField 'String', 'API_PARAMS', '"?q=star+wars+characters&format=json"'
         }
     }
 

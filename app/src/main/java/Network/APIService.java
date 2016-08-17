@@ -1,5 +1,7 @@
 package Network;
 
+import com.sumayyah.characterviewer.BuildConfig;
+
 import Model.APIResponse;
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -9,6 +11,6 @@ import retrofit2.http.GET;
  */
 public interface APIService {
 
-    @GET("?q=star+wars+characters&format=json")
+    @GET(BuildConfig.API_PARAMS)
     public Call<APIResponse> getApiResponse();
 }

@@ -22,11 +22,9 @@ import Managers.DataManager;
  */
 public class CharacterListAdapter extends RecyclerView.Adapter<CharacterListAdapter.ViewHolder> {
 
-    private Context context;
     private ListFragment.ListItemClickListener listItemClickListener;
 
-    public CharacterListAdapter(Context context, ListFragment.ListItemClickListener listItemClickListener) {
-        this.context = context;
+    public CharacterListAdapter(ListFragment.ListItemClickListener listItemClickListener) {
         this.listItemClickListener = listItemClickListener;
     }
 
@@ -67,9 +65,8 @@ public class CharacterListAdapter extends RecyclerView.Adapter<CharacterListAdap
     }
 
     @Override
-    public int getItemCount() { //TODO Create singleton
+    public int getItemCount() {
         int size = DataManager.getInstance().getList().size();
-        Console.log("Num items "+size);
         return size;
     }
 

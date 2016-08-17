@@ -40,7 +40,7 @@ public class ListFragment extends Fragment {
         staggeredGridLayoutManager = new StaggeredGridLayoutManager(LIST_VIEW, StaggeredGridLayoutManager.VERTICAL);
 
         list.setLayoutManager(staggeredGridLayoutManager);
-        adapter = new CharacterListAdapter(getActivity(), listItemClickListener);
+        adapter = new CharacterListAdapter(listItemClickListener);
         list.setAdapter(adapter);
 
         Console.log("Created fragment, set up list and adapter ");

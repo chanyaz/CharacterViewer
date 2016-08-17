@@ -1,6 +1,5 @@
 package Network;
-
-import Managers.DataManager;
+import Managers.NetworkManager;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -11,7 +10,7 @@ public class RetrofitBuilder {
 
     public Retrofit getRetrofitBuilder() {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(DataManager.getInstance().getBaseUrl())
+                .baseUrl(NetworkManager.getBaseURL())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 

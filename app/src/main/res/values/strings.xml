@@ -3,4 +3,5 @@
     <string name="toggle_show_grid">Show as grid</string>
     <string name="list_fragment_tag">List fragment</string>
     <string name="detail_fragment_tag">Detail fragment</string>
+    <string name="base_api_url">http://api.duckduckgo.com/</string>
 </resources>

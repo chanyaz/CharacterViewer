@@ -20,7 +20,6 @@ public class DataManager {
     }
 
     private static ArrayList<Character> characterList = null;
-    private String BASE_URL = "http://api.duckduckgo.com/?q=simpsons+characters&format=json";
 
     public void populateList(APIResponse apiResponse, ListCompleteListener listCompleteListener) {
 
@@ -40,9 +39,5 @@ public class DataManager {
 
     public ArrayList<Character> getList() {
         return characterList;
-    }
-
-    public String getBaseUrl() {
-        return BASE_URL;
     }
 }

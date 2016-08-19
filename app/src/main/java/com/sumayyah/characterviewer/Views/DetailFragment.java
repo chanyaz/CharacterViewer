@@ -53,8 +53,8 @@ public class DetailFragment extends Fragment {
             characterName.setText(c.getName());
             characterDetails.setText(c.getDescription());
 
-            if(c.getImageURL().length() > 0) { //TODO figure out how to separate null pics
-                Picasso.with(getActivity()).load(c.getImageURL()).placeholder(R.drawable.ic_view_grid).into(profilePic);
+            if(c.getImageURL().length() > 0) {
+                Picasso.with(getActivity()).load(c.getImageURL()).placeholder(R.drawable.placeholder_profile_pic).into(profilePic);
             } else {
                 Picasso.with(getActivity()).load(R.drawable.placeholder_profile_pic).placeholder(R.drawable.ic_view_grid).into(profilePic);
             }

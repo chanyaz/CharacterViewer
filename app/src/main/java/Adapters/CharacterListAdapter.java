@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 import com.sumayyah.characterviewer.R;
-import com.sumayyah.characterviewer.Views.Console;
 import com.sumayyah.characterviewer.Views.ListFragment;
 
 import Model.Character;
@@ -23,9 +22,13 @@ import Managers.DataManager;
 public class CharacterListAdapter extends RecyclerView.Adapter<CharacterListAdapter.ViewHolder> {
 
     private ListFragment.ListItemClickListener listItemClickListener;
+    public boolean isList;
+    private Context context;
 
-    public CharacterListAdapter(ListFragment.ListItemClickListener listItemClickListener) {
+    public CharacterListAdapter(ListFragment.ListItemClickListener listItemClickListener, Context context) {
         this.listItemClickListener = listItemClickListener;
+        this.context = context;
+        isList = true;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -53,9 +56,20 @@ public class CharacterListAdapter extends RecyclerView.Adapter<CharacterListAdap
     public void onBindViewHolder(ViewHolder holder, final int position) {
 
         Character c = DataManager.getInstance().getList().get(position);
-        holder.characterName.setText(c.getName());
-//        Picasso.with(context).load(c.getImageURL()).placeholder(R.drawable.ic_view_grid).into(holder.profilePic);
 
+        //If grid view, add a profile image
+        if(!isList) {
+            if(c.getImageURL().length() > 0) {
+                Picasso.with(context).load(c.getImageURL()).placeholder(R.drawable.placeholder_profile_pic).into(holder.profilePic);
+            } else {
+                Picasso.with(context).load(R.drawable.placeholder_profile_pic).placeholder(R.drawable.ic_view_grid).into(holder.profilePic);
+            }
+        } else {
+            holder.profilePic.setVisibility(View.GONE);
+        }
+
+        //Set common information
+        holder.characterName.setText(c.getName());
         holder.cardContentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

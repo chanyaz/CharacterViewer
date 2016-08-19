@@ -1,5 +1,7 @@
 package Model;
 
+import com.sumayyah.characterviewer.Views.Console;
+
 /**
  * Created by sumayyah on 8/10/16.
  */
@@ -25,6 +27,7 @@ public class Character {
     }
 
     public String getImageURL() {
+        Console.log("URL is "+imageURL+" size "+imageURL.length());
         return imageURL;
     }
 

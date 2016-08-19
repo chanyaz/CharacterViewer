@@ -30,6 +30,7 @@ public class MainActivity extends Activity implements ListFragment.ListItemClick
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setUpActionBar();
         isTablet = false;
+        isList = true;
 
         new NetworkManager(this, getString(R.string.base_api_url)).executeAPICall();
 
@@ -37,7 +38,6 @@ public class MainActivity extends Activity implements ListFragment.ListItemClick
         createRelevantViews();
 
       //TODO check rotations
-        isList = true;
     }
 
     private void createRelevantViews() {
@@ -99,7 +99,6 @@ public class MainActivity extends Activity implements ListFragment.ListItemClick
         ListFragment listFragment = (ListFragment) getFragmentManager().findFragmentById(R.id.list_fragment_holder);
 
         if (isList) {
-          //TODO check if visible
             listFragment.gridSelected();
             item.setIcon(R.drawable.ic_view_list);
             item.setTitle(getString(R.string.toggle_show_list));
@@ -110,16 +109,6 @@ public class MainActivity extends Activity implements ListFragment.ListItemClick
             item.setTitle(getString(R.string.toggle_show_grid));
             isList = true;
         }
-    }
-
-    @Override
-    protected void onPause() {
-       super.onPause();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
     }
 
     @Override

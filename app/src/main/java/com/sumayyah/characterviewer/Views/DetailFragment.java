@@ -47,15 +47,17 @@ public class DetailFragment extends Fragment {
 
     public void refreshUI(int position) {
 
-        Console.log("setting detail UI with position "+position);
-
         if(DataManager.getInstance().getList().size() > 0) {
-            Character c = DataManager.getInstance().getList().get(position);
-//        Console.log(c.printDetails());
 
+            Character c = DataManager.getInstance().getList().get(position);
             characterName.setText(c.getName());
             characterDetails.setText(c.getDescription());
-//        Picasso.with(getActivity()).load(c.getImageURL()).placeholder(R.drawable.ic_view_grid).into(profilePic);
+
+            if(c.getImageURL().length() > 0) { //TODO figure out how to separate null pics
+                Picasso.with(getActivity()).load(c.getImageURL()).placeholder(R.drawable.ic_view_grid).into(profilePic);
+            } else {
+                Picasso.with(getActivity()).load(R.drawable.placeholder_profile_pic).placeholder(R.drawable.ic_view_grid).into(profilePic);
+            }
         }
     }
 }

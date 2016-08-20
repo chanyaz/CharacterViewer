@@ -1,8 +1,13 @@
 package com.sumayyah.characterviewer.Views;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.FragmentManager;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -32,10 +37,16 @@ public class MainActivity extends Activity implements ListFragment.ListItemClick
         isTablet = false;
         isList = true;
 
-        new NetworkManager(this, getString(R.string.base_api_url)).executeAPICall();
+        if(checkConnection()) {
+            fetchData();
+        }
 
         fragmentManager = getFragmentManager();
         createRelevantViews();
+    }
+
+    private void fetchData() {
+        new NetworkManager(this, getString(R.string.base_api_url)).executeAPICall();
     }
 
     private void createRelevantViews() {
@@ -133,7 +144,6 @@ public class MainActivity extends Activity implements ListFragment.ListItemClick
 
     @Override
     public void onNetworkOpsComplete() {
-        Console.log("Main- network ops complete");
 
         //Refresh UI to reflect that all data is available now
         ListFragment listFragment = (ListFragment) getFragmentManager().findFragmentById(R.id.list_fragment_holder);
@@ -143,5 +153,27 @@ public class MainActivity extends Activity implements ListFragment.ListItemClick
             DetailFragment detailFragment = (DetailFragment) fragmentManager.findFragmentByTag(getString(R.string.detail_fragment_tag));
             detailFragment.refreshUI(0);
         }
+    }
+
+    private boolean checkConnection() {
+        ConnectivityManager cm = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        if(activeNetwork == null || !activeNetwork.isConnectedOrConnecting()) {
+            new AlertDialog.Builder(this)
+                    .setMessage(getString(R.string.turn_on_internet_prompt))
+                    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            finish();
+                        }
+                    })
+                    .setCancelable(false)
+                    .show();
+
+            return false;
+        }
+
+        return true;
     }
 }

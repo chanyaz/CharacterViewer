@@ -27,7 +27,6 @@ public class Character {
     }
 
     public String getImageURL() {
-        Console.log("URL is "+imageURL+" size "+imageURL.length());
         return imageURL;
     }
 
@@ -42,7 +41,7 @@ public class Character {
 
     /** Helper methods */
     private void parseJSONText(String JSONText) {
-        String array[] = JSONText.split("-", 2);
+        String array[] = JSONText.split("\\s-\\s", 2);
 
         String name = array[0];
         String desc = array[1];

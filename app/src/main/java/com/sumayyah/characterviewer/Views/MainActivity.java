@@ -36,8 +36,6 @@ public class MainActivity extends Activity implements ListFragment.ListItemClick
 
         fragmentManager = getFragmentManager();
         createRelevantViews();
-
-      //TODO check rotations
     }
 
     private void createRelevantViews() {

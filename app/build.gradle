@@ -55,4 +55,5 @@ dependencies {
     compile 'com.squareup.retrofit2:converter-gson:2.1.0'
     compile 'com.squareup.retrofit2:converter-jackson:2.1.0'
     provided 'org.glassfish:javax.annotation:10.0-b28'
+    compile 'jp.wasabeef:recyclerview-animators:2.2.3'
 }

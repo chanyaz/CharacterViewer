@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +12,7 @@ import android.view.ViewGroup;
 import com.sumayyah.characterviewer.R;
 
 import Adapters.CharacterListAdapter;
+import jp.wasabeef.recyclerview.animators.SlideInUpAnimator;
 
 /**
  * Created by sumayyah on 8/10/16.
@@ -46,16 +46,11 @@ public class ListFragment extends Fragment {
         adapter = new CharacterListAdapter(listItemClickListener, getActivity());
         list.setAdapter(adapter);
 
-        Console.log("Created fragment, set up list and adapter ");
-
+        list.setItemAnimator(new SlideInUpAnimator());
 
         return v;
     }
 
-    @Override
-    public void onSaveInstanceState(Bundle savedInstanceState) {
-        super.onSaveInstanceState(savedInstanceState);
-    }
 
     public interface ListItemClickListener {
         void onListItemSelected(int position);

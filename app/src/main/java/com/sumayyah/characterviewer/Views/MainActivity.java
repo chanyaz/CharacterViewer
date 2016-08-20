@@ -101,12 +101,12 @@ public class MainActivity extends Activity implements ListFragment.ListItemClick
 
         if (isList) {
             listFragment.gridSelected();
-            item.setIcon(R.drawable.ic_view_list);
+            item.setIcon(R.drawable.ic_view_list_white_24dp);
             item.setTitle(getString(R.string.toggle_show_list));
             isList = false;
         } else {
             listFragment.listSelected();
-            item.setIcon(R.drawable.ic_view_grid);
+            item.setIcon(R.drawable.ic_view_grid_white_24dp);
             item.setTitle(getString(R.string.toggle_show_grid));
             isList = true;
         }

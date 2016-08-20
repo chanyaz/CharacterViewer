@@ -80,8 +80,7 @@ public class CharacterListAdapter extends RecyclerView.Adapter<CharacterListAdap
 
     @Override
     public int getItemCount() {
-        int size = DataManager.getInstance().getList().size();
-        return size;
+        return DataManager.getInstance().getList().size();
     }
 
 

@@ -69,6 +69,7 @@ public class MainActivity extends Activity implements ListFragment.ListItemClick
             getActionBar().setDisplayHomeAsUpEnabled(false);
             getActionBar().setDisplayShowTitleEnabled(true);
             getActionBar().setElevation(7);
+            toolbar.setTitleTextColor(getResources().getColor(R.color.lightGrey));
         }
     }
 

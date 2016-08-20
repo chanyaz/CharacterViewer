@@ -14,7 +14,7 @@ import retrofit2.Response;
 public class NetworkManager {
 
     private NetworkOpsCompleteListener networkOpsCompleteListener;
-    private static String BASE_URL= null;
+    private static String BASE_URL; //TODO doesn't need to be static
 
     public NetworkManager(NetworkOpsCompleteListener networkOpsCompleteListener, String baseUrl) {
         this.networkOpsCompleteListener = networkOpsCompleteListener;

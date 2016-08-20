@@ -5,7 +5,7 @@
     android:id="@+id/itemCard"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
+    android:layout_margin="10dp"
     card_view:cardCornerRadius="@dimen/card_corner_radius"
     card_view:cardElevation="@dimen/card_elevation">
 
@@ -20,7 +20,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="10dp">
 
             <ImageView
                 android:id="@+id/profilePic"
@@ -32,7 +33,7 @@
                 android:id="@+id/characterName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
+                android:textAppearance="?android:textAppearanceMedium"
                 android:padding="5dp"/>
         </LinearLayout>
 

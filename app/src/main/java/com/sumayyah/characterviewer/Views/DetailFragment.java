@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toolbar;
 
 import com.squareup.picasso.Picasso;
 import com.sumayyah.characterviewer.R;
@@ -20,7 +21,6 @@ import Managers.DataManager;
 public class DetailFragment extends Fragment {
 
     private static final int DEFAULT_DETAIL_VIEW = 0;
-    private TextView characterName;
     private TextView characterDetails;
     private ImageView profilePic;
 
@@ -31,7 +31,6 @@ public class DetailFragment extends Fragment {
 
         View v = inflater.inflate(R.layout.detail_fragment_layout, container, false);
 
-        characterName = (TextView) v.findViewById(R.id.characterName);
         characterDetails = (TextView) v.findViewById(R.id.characterDetails);
         profilePic = (ImageView) v.findViewById(R.id.profilePic);
 
@@ -50,7 +49,6 @@ public class DetailFragment extends Fragment {
         if(DataManager.getInstance().getList().size() > 0) {
 
             Character c = DataManager.getInstance().getList().get(position);
-            characterName.setText(c.getName());
             characterDetails.setText(c.getDescription());
 
             if(c.getImageURL().length() > 0) {

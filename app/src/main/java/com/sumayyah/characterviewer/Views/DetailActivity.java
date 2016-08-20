@@ -32,7 +32,6 @@ public class DetailActivity extends Activity {
         setContentView(R.layout.detail_activity_layout);
 
         int position = getIntent().getIntExtra("position",0);
-        Console.log("Detail activity");
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setUpActionBar(position);

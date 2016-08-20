@@ -25,7 +25,6 @@ public class ListFragment extends Fragment {
     private CharacterListAdapter adapter;
     private View v;
     private ListItemClickListener listItemClickListener;
-    private boolean isList;
 
     private LinearLayoutManager linearLayoutManager;
     private GridLayoutManager gridLayoutManager;
@@ -36,7 +35,6 @@ public class ListFragment extends Fragment {
 
         v = inflater.inflate(R.layout.list_fragment_layout, container, false);
         listItemClickListener = (ListItemClickListener) getActivity();
-        isList = true;
 
         //Setup view
         list = (RecyclerView) v.findViewById(R.id.list);

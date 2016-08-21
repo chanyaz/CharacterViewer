@@ -1,4 +1,4 @@
-package com.sumayyah.characterviewer.Views;
+package com.sumayyah.characterviewer.main;
 
 import android.app.Fragment;
 import android.os.Bundle;
@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 
 import com.sumayyah.characterviewer.R;
 
-import Adapters.CharacterListAdapter;
+import com.sumayyah.characterviewer.main.Adapters.CharacterListAdapter;
 import jp.wasabeef.recyclerview.animators.SlideInUpAnimator;
 
 /**

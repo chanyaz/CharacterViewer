@@ -1,4 +1,4 @@
-package Adapters;
+package com.sumayyah.characterviewer.main.Adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -11,10 +11,10 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 import com.sumayyah.characterviewer.R;
-import com.sumayyah.characterviewer.Views.ListFragment;
+import com.sumayyah.characterviewer.main.ListFragment;
 
-import Model.Character;
-import Managers.DataManager;
+import com.sumayyah.characterviewer.main.Model.Character;
+import com.sumayyah.characterviewer.main.Managers.DataManager;
 
 /**
  * Created by sumayyah on 8/10/16.

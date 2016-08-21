@@ -1,5 +1,5 @@
 
-package Model;
+package com.sumayyah.characterviewer.main.Model;
 
 import java.util.ArrayList;
 import java.util.List;

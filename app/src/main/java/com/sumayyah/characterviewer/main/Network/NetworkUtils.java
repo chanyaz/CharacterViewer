@@ -1,4 +1,4 @@
-package Network;
+package com.sumayyah.characterviewer.main.Network;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -12,7 +12,7 @@ import com.sumayyah.characterviewer.R;
 
 import java.io.IOException;
 
-import Model.APIResponse;
+import com.sumayyah.characterviewer.main.Model.APIResponse;
 import okhttp3.Cache;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
@@ -21,7 +21,6 @@ import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.GET;
-import retrofit2.http.Headers;
 
 /**
  * Created by sumayyah on 8/20/16.
@@ -89,9 +88,13 @@ public class NetworkUtils {
         return true;
     }
 
+    public boolean doesCacheExist() {
+        return activity.getCacheDir() == null;
+    }
+
     public void showFailureDialog() {
         new AlertDialog.Builder(activity)
-                .setMessage("Sorry, some error has occurred. Please try again later")
+                .setMessage(activity.getString(R.string.error_dialog_text))
                 .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

@@ -1,6 +1,4 @@
-package Model;
-
-import com.sumayyah.characterviewer.Views.Console;
+package com.sumayyah.characterviewer.main.Model;
 
 /**
  * Created by sumayyah on 8/10/16.

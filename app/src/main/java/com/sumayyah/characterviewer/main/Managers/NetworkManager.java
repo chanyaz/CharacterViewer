@@ -1,9 +1,9 @@
-package Managers;
+package com.sumayyah.characterviewer.main.Managers;
 
-import com.sumayyah.characterviewer.Views.Console;
+import com.sumayyah.characterviewer.main.Console;
 
-import Model.APIResponse;
-import Network.NetworkUtils;
+import com.sumayyah.characterviewer.main.Model.APIResponse;
+import com.sumayyah.characterviewer.main.Network.NetworkUtils;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

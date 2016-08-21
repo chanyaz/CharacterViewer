@@ -1,22 +1,13 @@
-package com.sumayyah.characterviewer.Views;
+package com.sumayyah.characterviewer.main;
 
 import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentManager;
 import android.os.Bundle;
-import android.support.v4.app.NavUtils;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toolbar;
 
 import com.sumayyah.characterviewer.R;
-
-import Adapters.CharacterListAdapter;
-import Managers.DataManager;
+import com.sumayyah.characterviewer.main.Managers.DataManager;
 
 /**
  * Created by sumayyah on 8/10/16.
@@ -54,6 +45,7 @@ public class DetailActivity extends Activity {
             getActionBar().setDisplayShowTitleEnabled(true);
             getActionBar().setElevation(7);
             getActionBar().setTitle(DataManager.getInstance().getList().get(position).getName());
+            toolbar.setTitleTextColor(getResources().getColor(R.color.White));
         }
     }
 

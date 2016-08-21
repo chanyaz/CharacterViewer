@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".Views.MainActivity"
+        <activity android:name=".main.MainActivity"
             android:label="@string/APP_NAME"
             android:configChanges="orientation|screenSize|keyboardHidden">
             <intent-filter>
@@ -21,9 +21,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Views.DetailActivity"
+        <activity android:name=".main.DetailActivity"
             android:label="@string/APP_NAME"
-            android:parentActivityName=".Views.MainActivity">
+            android:parentActivityName=".main.MainActivity">
         </activity>
 
     </application>

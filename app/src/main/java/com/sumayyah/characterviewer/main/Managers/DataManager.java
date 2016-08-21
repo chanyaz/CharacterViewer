@@ -1,9 +1,9 @@
-package Managers;
+package com.sumayyah.characterviewer.main.Managers;
 import java.util.ArrayList;
 
-import Model.APIResponse;
-import Model.Character;
-import Model.RelatedTopic;
+import com.sumayyah.characterviewer.main.Model.APIResponse;
+import com.sumayyah.characterviewer.main.Model.Character;
+import com.sumayyah.characterviewer.main.Model.RelatedTopic;
 
 /**
  * Created by sumayyah on 8/10/16.

@@ -1,4 +1,4 @@
-package com.sumayyah.characterviewer.Views;
+package com.sumayyah.characterviewer.main;
 
 import android.app.Fragment;
 import android.os.Bundle;
@@ -7,13 +7,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toolbar;
 
 import com.squareup.picasso.Picasso;
 import com.sumayyah.characterviewer.R;
 
-import Model.Character;
-import Managers.DataManager;
+import com.sumayyah.characterviewer.main.Model.Character;
+import com.sumayyah.characterviewer.main.Managers.DataManager;
 
 /**
  * Created by sumayyah on 8/10/16.

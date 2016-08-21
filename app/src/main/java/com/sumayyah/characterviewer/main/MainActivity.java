@@ -1,13 +1,8 @@
-package com.sumayyah.characterviewer.Views;
+package com.sumayyah.characterviewer.main;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.FragmentManager;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -16,8 +11,8 @@ import android.widget.Toolbar;
 
 import com.sumayyah.characterviewer.R;
 
-import Managers.NetworkManager;
-import Network.NetworkUtils;
+import com.sumayyah.characterviewer.main.Managers.NetworkManager;
+import com.sumayyah.characterviewer.main.Network.NetworkUtils;
 
 
 public class MainActivity extends Activity implements ListFragment.ListItemClickListener, NetworkManager.NetworkOpsCompleteListener {
@@ -42,10 +37,12 @@ public class MainActivity extends Activity implements ListFragment.ListItemClick
         networkUtils = new NetworkUtils(this);
         fragmentManager = getFragmentManager();
 
-//        if(networkUtils.isNetworkAvailable()) {
+        //If running this app offline with no cached data, display warning
+        if(!networkUtils.doesCacheExist() && !networkUtils.isNetworkAvailable()) {
+            networkUtils.showFailureDialog();
+        } else {
             fetchData();
-//        }
-
+        }
         createRelevantViews();
     }
 

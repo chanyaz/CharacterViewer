@@ -1,4 +1,4 @@
-package com.sumayyah.characterviewer.Views;
+package com.sumayyah.characterviewer.main;
 
 import android.util.Log;
 

@@ -1,9 +1,9 @@
 package Managers;
+
 import com.sumayyah.characterviewer.Views.Console;
 
 import Model.APIResponse;
-import Network.APIService;
-import Network.RetrofitBuilder;
+import Network.NetworkUtils;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -14,17 +14,16 @@ import retrofit2.Response;
 public class NetworkManager {
 
     private NetworkOpsCompleteListener networkOpsCompleteListener;
-    private static String BASE_URL; //TODO doesn't need to be static
+    private NetworkUtils networkUtils;
 
-    public NetworkManager(NetworkOpsCompleteListener networkOpsCompleteListener, String baseUrl) {
+    public NetworkManager(NetworkUtils networkUtils, NetworkOpsCompleteListener networkOpsCompleteListener) {
+        this.networkUtils = networkUtils;
         this.networkOpsCompleteListener = networkOpsCompleteListener;
-        this.BASE_URL = baseUrl;
     }
 
     public void executeAPICall() {
 
-        APIService apiService = new RetrofitBuilder().getRetrofitBuilder().create(APIService.class);
-        Call<APIResponse> call = apiService.getApiResponse();
+        Call<APIResponse> call = networkUtils.getAPIService().getApiResponse();
         call.enqueue(callback);
     }
 
@@ -38,7 +37,7 @@ public class NetworkManager {
         @Override
         public void onFailure(Call<APIResponse> call, Throwable t) {
             Console.log("App - Failure "+call.toString());
-            //TODO error dialog
+            networkUtils.showFailureDialog();
         }
     };
 
@@ -51,9 +50,5 @@ public class NetworkManager {
 
     public interface NetworkOpsCompleteListener {
         void onNetworkOpsComplete();
-    }
-
-    public static String getBaseURL() {
-        return BASE_URL;
     }
 }

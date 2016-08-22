@@ -57,7 +57,7 @@ public class CharacterListAdapter extends RecyclerView.Adapter<CharacterListAdap
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, final int position) {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
 
         animateItem(holder.itemView);
 
@@ -79,7 +79,7 @@ public class CharacterListAdapter extends RecyclerView.Adapter<CharacterListAdap
         holder.cardContentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listItemClickListener.onListItemSelected(position);
+                listItemClickListener.onListItemSelected(holder.getAdapterPosition());
             }
         });
     }

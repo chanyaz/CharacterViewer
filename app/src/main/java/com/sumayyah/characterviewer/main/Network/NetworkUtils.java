@@ -12,6 +12,7 @@ import com.sumayyah.characterviewer.R;
 
 import java.io.IOException;
 
+import com.sumayyah.characterviewer.main.Console;
 import com.sumayyah.characterviewer.main.Model.APIResponse;
 import okhttp3.Cache;
 import okhttp3.Interceptor;
@@ -86,10 +87,6 @@ public class NetworkUtils {
             return false;
         }
         return true;
-    }
-
-    public boolean doesCacheExist() {
-        return activity.getCacheDir() == null;
     }
 
     public void showFailureDialog() {

@@ -1,7 +1,6 @@
 package com.sumayyah.characterviewer.main.Managers;
 
 import com.sumayyah.characterviewer.main.Console;
-
 import com.sumayyah.characterviewer.main.Model.APIResponse;
 import com.sumayyah.characterviewer.main.Network.NetworkUtils;
 import retrofit2.Call;
@@ -31,12 +30,16 @@ public class NetworkManager {
         @Override
         public void onResponse(Call<APIResponse> call, Response<APIResponse> response) {
             APIResponse apiResponse = response.body();
+
+            if(apiResponse == null) {
+                networkUtils.showFailureDialog();
+                return;
+            }
             DataManager.getInstance().populateList(apiResponse, listCompleteListener);
         }
 
         @Override
         public void onFailure(Call<APIResponse> call, Throwable t) {
-            Console.log("App - Failure "+call.toString());
             networkUtils.showFailureDialog();
         }
     };

@@ -37,12 +37,7 @@ public class MainActivity extends Activity implements ListFragment.ListItemClick
         networkUtils = new NetworkUtils(this);
         fragmentManager = getFragmentManager();
 
-        //If running this app offline with no cached data, display warning
-        if(!networkUtils.doesCacheExist() && !networkUtils.isNetworkAvailable()) {
-            networkUtils.showFailureDialog();
-        } else {
-            fetchData();
-        }
+        fetchData();
         createRelevantViews();
     }
 

@@ -12,13 +12,17 @@ import com.sumayyah.characterviewer.main.MainActivity;
 import org.junit.Rule;
 import org.junit.Test;
 
-public class ActivityLoadedTestCase {
+public class ActivityLoadedTestCase extends ActivityTestRule<MainActivity> {
 
     public static final String TAG = ActivityLoadedTestCase.class.toString();
+
     @Rule
     public ActivityTestRule<MainActivity> activityLoadedTestCase =
-            new ActivityTestRule<>(MainActivity.class);
+            new ActivityTestRule<>(MainActivity.class); //TODO is this necessary?
 
+    public ActivityLoadedTestCase(Class<MainActivity> activityClass) {
+        super(activityClass);
+    }
 
     @Test
     public void testListViewLoaded() throws Exception {

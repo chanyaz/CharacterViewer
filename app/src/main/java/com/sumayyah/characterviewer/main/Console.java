@@ -8,8 +8,7 @@ import android.util.Log;
 public class Console {
 
     //Log to IDE console
-    public static void log(String message){
-        Log.d(" com.sumayyah.characterviewer.Views.Console: ", message);
-
+    public static void log(String tag, String message){
+        Log.d(tag, message);
     }
 }

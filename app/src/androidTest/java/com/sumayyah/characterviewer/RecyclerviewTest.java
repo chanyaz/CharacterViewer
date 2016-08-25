@@ -1,41 +1,52 @@
 package com.sumayyah.characterviewer;
 
+import android.app.Instrumentation;
 import android.content.Context;
+import android.support.test.rule.ActivityTestRule;
+import android.support.test.runner.AndroidJUnit4;
 import android.test.ActivityInstrumentationTestCase2;
+import android.test.AndroidTestCase;
 import android.test.InstrumentationTestCase;
 
 import com.sumayyah.characterviewer.main.Adapters.CharacterListAdapter;
+import com.sumayyah.characterviewer.main.Console;
 import com.sumayyah.characterviewer.main.ListFragment;
+import com.sumayyah.characterviewer.main.MainActivity;
 import com.sumayyah.characterviewer.main.Managers.DataManager;
 import com.sumayyah.characterviewer.main.Model.Character;
 
+import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import java.util.List;
 
 /**
  * Created by sumayyah on 8/24/2016.
  */
-public class RecyclerviewTest extends ActivityInstrumentationTestCase2 {
+@RunWith(AndroidJUnit4.class)
+public class RecyclerviewTest extends AndroidTestCase {
 
     Context mContext;
     CharacterListAdapter mAdapter;
     List<Character> characters;
 
-    public RecyclerviewTest(Class activityClass) {
-        super(activityClass);
-    }
+    @Rule
+    public ActivityTestRule<MainActivity> mActivityRule = new ActivityTestRule<>(MainActivity.class);
 
+    @Before
     public void setUp() throws Exception {
         super.setUp();
 
-        mContext = getInstrumentation().getTargetContext();
+        mContext = mActivityRule.getActivity().getApplicationContext();
         characters = DataManager.getInstance().getList();
         mAdapter = new CharacterListAdapter(fakeListItemClickListener, mContext);
     }
 
     @Test
     public void testAdapterShowsCorrectNumberOfItems() {
+
         int expected = characters.size();
         int actual = mAdapter.getItemCount();
 

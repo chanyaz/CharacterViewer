@@ -55,15 +55,9 @@ public class MainActivity extends Activity implements ListFragment.ListItemClick
             fragmentManager.beginTransaction().replace(R.id.list_fragment_holder, listFragment, getString(R.string.list_fragment_tag)).commit();
         }
 
-        //If is tablet, activate detail panel
-        if(findViewById(R.id.detail_fragment_holder) != null) {
+        //If detail fragment exists, set flag to true
+        if(findViewById(R.id.detail_fragment) != null) {
             isTablet = true;
-
-            DetailFragment detailFragment = (DetailFragment) fragmentManager.findFragmentByTag(getString(R.string.detail_fragment_tag));
-            if(detailFragment == null) {
-                detailFragment = new DetailFragment();
-                fragmentManager.beginTransaction().replace(R.id.detail_fragment_holder, detailFragment, getString(R.string.detail_fragment_tag)).commit();
-            }
         }
     }
 
@@ -129,12 +123,9 @@ public class MainActivity extends Activity implements ListFragment.ListItemClick
             startActivity(intent);
 
         } else {
-            //Detail fragment exists in tablet layout
-            DetailFragment detailFragment = new DetailFragment();
-            getFragmentManager().beginTransaction().replace(R.id.detail_fragment_holder, detailFragment).commit();
-            Bundle bundle = new Bundle();
-            bundle.putInt("position", position);
-            detailFragment.setArguments(bundle);
+            //if Detail fragment exists in tablet layout, update
+            DetailFragment detailFragment = (DetailFragment) fragmentManager.findFragmentById(R.id.detail_fragment);
+            detailFragment.refreshUI(position);
         }
     }
 
@@ -146,7 +137,7 @@ public class MainActivity extends Activity implements ListFragment.ListItemClick
         listFragment.update();
 
         if(isTablet) {
-            DetailFragment detailFragment = (DetailFragment) fragmentManager.findFragmentByTag(getString(R.string.detail_fragment_tag));
+            DetailFragment detailFragment = (DetailFragment) fragmentManager.findFragmentById(R.id.detail_fragment);
             detailFragment.refreshUI(0);
         }
     }

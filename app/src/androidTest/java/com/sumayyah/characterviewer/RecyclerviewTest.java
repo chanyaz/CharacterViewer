@@ -1,15 +1,11 @@
 package com.sumayyah.characterviewer;
 
-import android.app.Instrumentation;
 import android.content.Context;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
-import android.test.ActivityInstrumentationTestCase2;
 import android.test.AndroidTestCase;
-import android.test.InstrumentationTestCase;
 
 import com.sumayyah.characterviewer.main.Adapters.CharacterListAdapter;
-import com.sumayyah.characterviewer.main.Console;
 import com.sumayyah.characterviewer.main.ListFragment;
 import com.sumayyah.characterviewer.main.MainActivity;
 import com.sumayyah.characterviewer.main.Managers.DataManager;
@@ -51,11 +47,6 @@ public class RecyclerviewTest extends AndroidTestCase {
         int actual = mAdapter.getItemCount();
 
         assertEquals(expected, actual);
-    }
-
-    @Test
-    public void testClickListItemShowsCorrectDetails() {
-        //TODO
     }
 
     private ListFragment.ListItemClickListener fakeListItemClickListener = new ListFragment.ListItemClickListener() {

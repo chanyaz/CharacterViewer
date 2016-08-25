@@ -70,3 +70,8 @@ The Character data object specifies attributes for name, description and image U
 Retrofit’s response parses the returned JSON into POJO’s, which is why the Model package contains classes for each object type returned. The response triggers a callback that parses main container object (APIResponse) to find and create individual Characters, which are then added to DataManager’s list. Completion of the list triggers another callback to update the UI thread with the data. 
 
 Character class also contains a parser function to extract name and description from Result’s “text” field using a regular expression. 
+
+
+**TESTS**
+
+JUnit4 and Espresso are used for basic instrumentation and unit tests.

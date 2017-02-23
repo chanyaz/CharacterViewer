@@ -1,6 +1,7 @@
 package com.sumayyah.characterviewer.main;
 
 import android.app.Fragment;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,6 +12,7 @@ import android.view.ViewGroup;
 
 import com.sumayyah.characterviewer.R;
 
+import com.sumayyah.characterviewer.databinding.ListFragmentLayoutBinding;
 import com.sumayyah.characterviewer.main.Adapters.CharacterListAdapter;
 import jp.wasabeef.recyclerview.animators.SlideInUpAnimator;
 
@@ -21,34 +23,31 @@ public class ListFragment extends Fragment {
 
     private static final int GRID_VIEW = 2;
 
-    private RecyclerView list;
     private CharacterListAdapter adapter;
-    private View v;
     private ListItemClickListener listItemClickListener;
 
     private LinearLayoutManager linearLayoutManager;
     private GridLayoutManager gridLayoutManager;
+    private ListFragmentLayoutBinding binding;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        v = inflater.inflate(R.layout.list_fragment_layout, container, false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.list_fragment_layout, container, false);
         listItemClickListener = (ListItemClickListener) getActivity();
 
         //Setup view
-        list = (RecyclerView) v.findViewById(R.id.list);
-
         linearLayoutManager = new LinearLayoutManager(getActivity());
         gridLayoutManager = new GridLayoutManager(getActivity(), GRID_VIEW);
-        list.setLayoutManager(linearLayoutManager);
+        binding.list.setLayoutManager(linearLayoutManager);
 
         adapter = new CharacterListAdapter(listItemClickListener, getActivity());
-        list.setAdapter(adapter);
+        binding.list.setAdapter(adapter);
 
-        list.setItemAnimator(new SlideInUpAnimator());
+        binding.list.setItemAnimator(new SlideInUpAnimator());
 
-        return v;
+        return binding.getRoot();
     }
 
 
@@ -58,12 +57,12 @@ public class ListFragment extends Fragment {
 
     public void gridSelected() {
         adapter.isList = false;
-        list.setLayoutManager(gridLayoutManager);
+        binding.list.setLayoutManager(gridLayoutManager);
     }
 
     public void listSelected() {
         adapter.isList = true;
-        list.setLayoutManager(linearLayoutManager);
+        binding.list.setLayoutManager(linearLayoutManager);
     }
 
     public void update() {

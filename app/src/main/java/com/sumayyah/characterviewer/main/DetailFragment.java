@@ -1,6 +1,7 @@
 package com.sumayyah.characterviewer.main;
 
 import android.app.Fragment;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 import com.sumayyah.characterviewer.R;
 
+import com.sumayyah.characterviewer.databinding.DetailFragmentLayoutBinding;
 import com.sumayyah.characterviewer.main.Model.Character;
 import com.sumayyah.characterviewer.main.Managers.DataManager;
 
@@ -20,18 +22,14 @@ import com.sumayyah.characterviewer.main.Managers.DataManager;
 public class DetailFragment extends Fragment {
 
     private static final int DEFAULT_DETAIL_VIEW = 0;
-    private TextView characterDetails;
-    private ImageView profilePic;
+    private DetailFragmentLayoutBinding binding;
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View v = inflater.inflate(R.layout.detail_fragment_layout, container, false);
-
-        characterDetails = (TextView) v.findViewById(R.id.characterDetails);
-        profilePic = (ImageView) v.findViewById(R.id.profilePic);
+        binding = DataBindingUtil.inflate(inflater, R.layout.detail_fragment_layout, container, false);
 
         //Get position from calling activity, if possible
         if(getArguments() !=null) {
@@ -40,7 +38,7 @@ public class DetailFragment extends Fragment {
             refreshUI(DEFAULT_DETAIL_VIEW);
         }
 
-        return v;
+        return binding.getRoot();
     }
 
     public void refreshUI(int position) {
@@ -48,12 +46,12 @@ public class DetailFragment extends Fragment {
         if(DataManager.getInstance().getList().size() > 0) {
 
             Character c = DataManager.getInstance().getList().get(position);
-            characterDetails.setText(c.getDescription());
+            binding.characterDetails.setText(c.getDescription());
 
             if(c.getImageURL().length() > 0) {
-                Picasso.with(getActivity()).load(c.getImageURL()).placeholder(R.drawable.placeholder_profile_pic).into(profilePic);
+                Picasso.with(getActivity()).load(c.getImageURL()).placeholder(R.drawable.placeholder_profile_pic).into(binding.profilePic);
             } else {
-                Picasso.with(getActivity()).load(R.drawable.placeholder_profile_pic).placeholder(R.drawable.ic_view_grid).into(profilePic);
+                Picasso.with(getActivity()).load(R.drawable.placeholder_profile_pic).placeholder(R.drawable.ic_view_grid).into(binding.profilePic);
             }
         }
     }

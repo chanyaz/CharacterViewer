@@ -11,6 +11,7 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+
     buildTypes {
 
         debug {
@@ -40,6 +41,10 @@ android {
             resValue "string", "APP_NAME", "Star Wars Character Viewer"
             buildConfigField 'String', 'API_PARAMS', '"?q=star+wars+characters&format=json"'
         }
+    }
+
+    dataBinding {
+        enabled = true
     }
 
 }

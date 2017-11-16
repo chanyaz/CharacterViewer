@@ -1,7 +1,7 @@
 package com.sumayyah.characterviewer.main.Managers;
 import java.util.ArrayList;
+import java.util.List;
 
-import com.sumayyah.characterviewer.main.Model.APIResponse;
 import com.sumayyah.characterviewer.main.Model.Character;
 import com.sumayyah.characterviewer.main.Model.RelatedTopic;
 
@@ -21,9 +21,9 @@ public class DataManager {
 
     private static ArrayList<Character> characterList = null;
 
-    public void populateList(APIResponse apiResponse, ListCompleteListener listCompleteListener) {
+    public void populateList(List<RelatedTopic> topicList, ListCompleteListener listCompleteListener) {
 
-        for(RelatedTopic relatedTopic: apiResponse.getRelatedTopics()) {
+        for(RelatedTopic relatedTopic: topicList) {
             Character c = new Character(relatedTopic);
             if(!characterList.contains(c)) {
                 characterList.add(c);

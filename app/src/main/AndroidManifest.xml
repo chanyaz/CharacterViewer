@@ -11,7 +11,8 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/APP_NAME"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+            android:name=".main.App">
 
         <activity android:name=".main.MainActivity"
             android:label="@string/APP_NAME"

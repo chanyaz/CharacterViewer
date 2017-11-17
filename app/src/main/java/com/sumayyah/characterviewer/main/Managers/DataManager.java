@@ -39,4 +39,8 @@ public class DataManager {
     public ArrayList<Character> getList() {
         return characterList;
     }
+
+    public void setCharacterList(ArrayList<Character> list) {
+        characterList = list;
+    }
 }

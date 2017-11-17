@@ -42,7 +42,7 @@ public class NetworkUtils {
     public interface APIService {
 
         @GET(BuildConfig.API_PARAMS)
-        public Call<List<RelatedTopic>> getApiResponse();
+        Call<List<RelatedTopic>> getApiResponse();
     }
 
     public APIService getAPIService() {

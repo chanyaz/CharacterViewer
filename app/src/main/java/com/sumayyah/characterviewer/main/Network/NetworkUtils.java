@@ -7,13 +7,17 @@ import android.content.DialogInterface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.sumayyah.characterviewer.BuildConfig;
 import com.sumayyah.characterviewer.R;
 
 import java.io.IOException;
+import java.util.List;
 
-import com.sumayyah.characterviewer.main.Console;
-import com.sumayyah.characterviewer.main.Model.APIResponse;
+import com.sumayyah.characterviewer.main.Model.RelatedTopic;
+import com.sumayyah.characterviewer.main.Model.RelatedTopicTypeAdapterFactory;
+
 import okhttp3.Cache;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
@@ -38,7 +42,7 @@ public class NetworkUtils {
     public interface APIService {
 
         @GET(BuildConfig.API_PARAMS)
-        public Call<APIResponse> getApiResponse();
+        Call<List<RelatedTopic>> getApiResponse();
     }
 
     public APIService getAPIService() {
@@ -47,9 +51,13 @@ public class NetworkUtils {
 
     public Retrofit getRetrofitBuilder() {
 
+        Gson gson = new GsonBuilder()
+                                .registerTypeAdapterFactory(new RelatedTopicTypeAdapterFactory())
+                                .create();
+
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(activity.getString(R.string.base_api_url))
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .client(getClient())
                 .build();
 

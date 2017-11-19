@@ -11,8 +11,14 @@ import android.widget.Toolbar;
 
 import com.sumayyah.characterviewer.R;
 
+import com.sumayyah.characterviewer.main.Data.CharacterRepository;
+import com.sumayyah.characterviewer.main.Managers.DataManager;
 import com.sumayyah.characterviewer.main.Managers.NetworkManager;
+import com.sumayyah.characterviewer.main.Model.Character;
 import com.sumayyah.characterviewer.main.Network.NetworkUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class MainActivity extends Activity implements ListFragment.ListItemClickListener, NetworkManager.NetworkOpsCompleteListener {
@@ -22,7 +28,7 @@ public class MainActivity extends Activity implements ListFragment.ListItemClick
     private boolean isList;
     private boolean isTablet;
     private FragmentManager fragmentManager;
-    private NetworkUtils networkUtils;
+    private ArrayList<Character> characters;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +40,6 @@ public class MainActivity extends Activity implements ListFragment.ListItemClick
 
         isTablet = false;
         isList = true;
-        networkUtils = new NetworkUtils(this);
         fragmentManager = getFragmentManager();
 
         fetchData();
@@ -42,7 +47,10 @@ public class MainActivity extends Activity implements ListFragment.ListItemClick
     }
 
     private void fetchData() {
-        new NetworkManager(networkUtils, this).executeAPICall();
+        Console.log("MainActivity", "Fetching data");
+        characters = new CharacterRepository().getAllCharacters();
+        DataManager.getInstance().setCharacterList(characters); //TODO Notify the views that the data has changed
+        //new NetworkManager(networkUtils, this).executeAPICall();
     }
 
     private void createRelevantViews() {

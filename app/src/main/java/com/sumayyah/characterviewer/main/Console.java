@@ -9,6 +9,6 @@ public class Console {
 
     //Log to IDE console
     public static void log(String tag, String message){
-        Log.d(tag, message);
+        Log.d(tag+"Sumi", message);
     }
 }

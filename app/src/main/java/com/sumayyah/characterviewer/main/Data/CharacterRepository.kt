@@ -8,9 +8,6 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-/**
- * Created by sahmed014c on 11/17/17.
- */
 class CharacterRepository { //TODO singleton
 
     private val networkManager = NetworkManager() //TODO Inject
@@ -28,6 +25,15 @@ class CharacterRepository { //TODO singleton
         Console.log("REpository", "Returning "+characterList.size+" characters from local source" )
 
         return characterList
+    }
+
+    //get a specified character
+    fun getSpecificCharacterByName(characterName: String) : Character? {
+
+        characterList.map {
+            if (it.name == characterName) return it
+        }
+        return null
     }
 
     private fun fetchCharactersFromApi() : ArrayList<Character> {

@@ -28,8 +28,6 @@ public class MainActivity extends Activity implements ListFragment.ListItemClick
     private boolean isList;
     private boolean isTablet;
     private FragmentManager fragmentManager;
-    private NetworkUtils networkUtils;
-
     private ArrayList<Character> characters;
 
     @Override
@@ -42,7 +40,6 @@ public class MainActivity extends Activity implements ListFragment.ListItemClick
 
         isTablet = false;
         isList = true;
-        networkUtils = new NetworkUtils(this);
         fragmentManager = getFragmentManager();
 
         fetchData();

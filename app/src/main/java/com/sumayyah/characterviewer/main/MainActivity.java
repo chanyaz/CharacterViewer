@@ -15,10 +15,8 @@ import com.sumayyah.characterviewer.main.Data.CharacterRepository;
 import com.sumayyah.characterviewer.main.Managers.DataManager;
 import com.sumayyah.characterviewer.main.Managers.NetworkManager;
 import com.sumayyah.characterviewer.main.Model.Character;
-import com.sumayyah.characterviewer.main.Network.NetworkUtils;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class MainActivity extends Activity implements ListFragment.ListItemClickListener, NetworkManager.NetworkOpsCompleteListener {
@@ -50,7 +48,8 @@ public class MainActivity extends Activity implements ListFragment.ListItemClick
         Console.log("MainActivity", "Fetching data");
         characters = new CharacterRepository().getAllCharacters();
         DataManager.getInstance().setCharacterList(characters); //TODO Notify the views that the data has changed
-        //new NetworkManager(networkUtils, this).executeAPICall();
+        onNetworkOpsComplete();
+//        new NetworkManager(networkUtils, this).executeAPICall();
     }
 
     private void createRelevantViews() {
@@ -60,7 +59,7 @@ public class MainActivity extends Activity implements ListFragment.ListItemClick
         if(listFragment == null) {
 
             listFragment = new ListFragment();
-            fragmentManager.beginTransaction().replace(R.id.list_fragment_holder, listFragment, getString(R.string.list_fragment_tag)).commit();
+            fragmentManager.beginTransaction().replace(R.id.holder, listFragment, getString(R.string.list_fragment_tag)).commit();
         }
 
         //If detail fragment exists, set flag to true
@@ -104,7 +103,7 @@ public class MainActivity extends Activity implements ListFragment.ListItemClick
 
     private void toggle() {
         MenuItem item = menu.findItem(R.id.action_toggle);
-        ListFragment listFragment = (ListFragment) getFragmentManager().findFragmentById(R.id.list_fragment_holder);
+        ListFragment listFragment = (ListFragment) getFragmentManager().findFragmentById(R.id.holder);
 
         if (isList) {
             listFragment.gridSelected();
@@ -141,7 +140,7 @@ public class MainActivity extends Activity implements ListFragment.ListItemClick
     public void onNetworkOpsComplete() {
 
         //Refresh UI to reflect that all data is available now
-        ListFragment listFragment = (ListFragment) getFragmentManager().findFragmentById(R.id.list_fragment_holder);
+        ListFragment listFragment = (ListFragment) getFragmentManager().findFragmentById(R.id.holder);
         listFragment.update();
 
         if(isTablet) {

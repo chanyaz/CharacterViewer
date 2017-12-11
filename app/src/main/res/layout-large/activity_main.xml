@@ -19,7 +19,7 @@
 
             <!--List view-->
             <FrameLayout
-                android:id="@+id/list_fragment_holder"
+                android:id="@+id/holder"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1" />

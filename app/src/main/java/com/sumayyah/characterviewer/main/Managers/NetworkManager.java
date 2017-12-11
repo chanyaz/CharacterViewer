@@ -38,8 +38,4 @@ public class NetworkManager {
         Call<List<RelatedTopic>> call = retrofit.create(RetrofitAPIService.class).getAllData();
         return call;
     }
-
-    public interface NetworkOpsCompleteListener {
-        void onNetworkOpsComplete();
-    }
 }

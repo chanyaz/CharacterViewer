@@ -19,6 +19,8 @@ import com.sumayyah.characterviewer.main.ListFragment;
 import com.sumayyah.characterviewer.main.Model.Character;
 import com.sumayyah.characterviewer.main.Managers.DataManager;
 
+import java.util.ArrayList;
+
 /**
  * Created by sumayyah on 8/10/16.
  */
@@ -27,11 +29,13 @@ public class CharacterListAdapter extends RecyclerView.Adapter<CharacterListAdap
     public boolean isList;
     private Context context;
     private ListFragment.ListItemClickListener listItemClickListener;
+    private ArrayList<Character> characters;
 
-    public CharacterListAdapter(ListFragment.ListItemClickListener listItemClickListener, Context context) {
+    public CharacterListAdapter(ListFragment.ListItemClickListener listItemClickListener, Context context, ArrayList<Character> characters) {
         this.context = context;
         this.listItemClickListener = listItemClickListener;
         isList = true;
+        this.characters = characters;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -57,7 +61,7 @@ public class CharacterListAdapter extends RecyclerView.Adapter<CharacterListAdap
 
         animateItem(holder.itemView);
 
-        Character c = DataManager.getInstance().getList().get(position);
+        Character c = characters.get(position);
 
         //If grid view, add a profile image
         if(!isList) {
@@ -82,7 +86,7 @@ public class CharacterListAdapter extends RecyclerView.Adapter<CharacterListAdap
 
     @Override
     public int getItemCount() {
-        return DataManager.getInstance().getList().size();
+        return characters.size();
     }
 
 

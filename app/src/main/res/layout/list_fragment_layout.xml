@@ -1,17 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-        <android.support.v7.widget.RecyclerView
+    <TextView
+            android:id="@+id/emptyListView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="All text is empty right now!"
+            android:visibility="visible"/>
+    <!--TODO string format-->
+
+    <android.support.v7.widget.RecyclerView
             android:id="@+id/list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/lightGrey"
             android:divider="@null"
-            android:listSelector="@android:color/transparent"/>
-
-    </LinearLayout>
-</layout>
+            android:listSelector="@android:color/transparent"
+            android:visibility="gone"/>
+</LinearLayout>

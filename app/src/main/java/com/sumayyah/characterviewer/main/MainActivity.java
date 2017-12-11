@@ -13,15 +13,14 @@ import com.sumayyah.characterviewer.R;
 
 import com.sumayyah.characterviewer.main.Data.CharacterRepository;
 import com.sumayyah.characterviewer.main.Managers.DataManager;
-import com.sumayyah.characterviewer.main.Managers.NetworkManager;
 import com.sumayyah.characterviewer.main.Model.Character;
-import com.sumayyah.characterviewer.main.Network.NetworkUtils;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
-public class MainActivity extends Activity implements ListFragment.ListItemClickListener, NetworkManager.NetworkOpsCompleteListener {
+public class MainActivity extends Activity implements ListFragment.ListItemClickListener, ListView, DetailView {
 
     private Toolbar toolbar;
     private Menu menu;
@@ -29,6 +28,10 @@ public class MainActivity extends Activity implements ListFragment.ListItemClick
     private boolean isTablet;
     private FragmentManager fragmentManager;
     private ArrayList<Character> characters;
+    private MainPresenter mainPresenter;
+    private CharacterRepository repository; //TODO inject
+//    private ListFragment listFragment;
+    private DetailFragment detailFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,14 +45,22 @@ public class MainActivity extends Activity implements ListFragment.ListItemClick
         isList = true;
         fragmentManager = getFragmentManager();
 
-        fetchData();
+        if (repository == null) {
+            repository = new CharacterRepository();
+        }
+
+        if (mainPresenter == null) {
+            mainPresenter = new MainPresenter(this, this, repository);
+        }
+        Console.log("Sumi", "Main activity oncreate");
+
         createRelevantViews();
     }
 
     private void fetchData() {
-        Console.log("MainActivity", "Fetching data");
-        characters = new CharacterRepository().getAllCharacters();
-        DataManager.getInstance().setCharacterList(characters); //TODO Notify the views that the data has changed
+        //Console.log("MainActivity", "Fetching data");
+        //characters = new CharacterRepository().getAllCharacters();
+        //DataManager.getInstance().setCharacterList(characters); //TODO Notify the views that the data has changed
         //new NetworkManager(networkUtils, this).executeAPICall();
     }
 
@@ -58,15 +69,24 @@ public class MainActivity extends Activity implements ListFragment.ListItemClick
         //Initialize list fragment for both views
         ListFragment listFragment = (ListFragment) fragmentManager.findFragmentByTag(getString(R.string.list_fragment_tag));
         if(listFragment == null) {
+            Console.log("Sumi", "Main activity list fragmetn is null, creating new");
 
             listFragment = new ListFragment();
             fragmentManager.beginTransaction().replace(R.id.list_fragment_holder, listFragment, getString(R.string.list_fragment_tag)).commit();
+        } else {
+            Console.log("Sumi", "Main activity list fragmetn is NOT null");
+
         }
 
         //If detail fragment exists, set flag to true
         if(findViewById(R.id.detail_fragment) != null) {
             isTablet = true;
+            detailFragment = new DetailFragment();
+            fragmentManager.beginTransaction().replace(R.id.detail_fragment_holder, detailFragment, getString(R.string.detail_fragment_tag)).commit();
         }
+
+        Console.log("Sumi", "Main activity made fragments");
+        mainPresenter.initViews();
     }
 
     private void setUpActionBar() {
@@ -78,6 +98,12 @@ public class MainActivity extends Activity implements ListFragment.ListItemClick
             getActionBar().setElevation(7);
             toolbar.setTitleTextColor(getResources().getColor(R.color.lightGrey));
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        //mainPresenter.onResume();
     }
 
     @Override
@@ -122,8 +148,8 @@ public class MainActivity extends Activity implements ListFragment.ListItemClick
     @Override
     public void onListItemSelected(int position) {
 
-        if(!isTablet) {
 
+        if(!isTablet) {
             //Detail fragment is not in the phone layout, so start separate Activity
             //Include index of selected Character
             Intent intent = new Intent(this, DetailActivity.class);
@@ -131,22 +157,50 @@ public class MainActivity extends Activity implements ListFragment.ListItemClick
             startActivity(intent);
 
         } else {
-            //if Detail fragment exists in tablet layout, update
-            DetailFragment detailFragment = (DetailFragment) fragmentManager.findFragmentById(R.id.detail_fragment);
-            detailFragment.refreshUI(position);
+//            //if Detail fragment exists in tablet layout, update
+//            DetailFragment detailFragment = (DetailFragment) fragmentManager.findFragmentById(R.id.detail_fragment);
+//            detailFragment.showCharacterData(position);
+
+            //TODO call presenter
         }
     }
 
     @Override
-    public void onNetworkOpsComplete() {
+    public void showEmptyDetailView() {
 
-        //Refresh UI to reflect that all data is available now
-        ListFragment listFragment = (ListFragment) getFragmentManager().findFragmentById(R.id.list_fragment_holder);
-        listFragment.update();
+        if (isTablet) {
+//            DetailFragment detailFragment = (DetailFragment) fragmentManager.findFragmentById(R.id.detail_fragment);
+            detailFragment.showEmptyView();
+        }
+    }
+
+    @Override
+    public void showDetailForCharacter(@NotNull Character character) {
 
         if(isTablet) {
             DetailFragment detailFragment = (DetailFragment) fragmentManager.findFragmentById(R.id.detail_fragment);
-            detailFragment.refreshUI(0);
+            detailFragment.showCharacterData(character);
         }
+    }
+
+    @Override
+    public void showEmptyList() {
+
+        ListFragment listFragment = (ListFragment) getFragmentManager().findFragmentById(R.id.list_fragment_holder);
+        if (listFragment == null) {
+            Console.log("SUmi", "Main activity showing empty list, listfragment is null");
+        } else {
+            Console.log("SUmi", "Main activity showing empty list, listfragment is NOT null");
+
+        }
+        listFragment.showEmptyView();
+    }
+
+    @Override
+    public void loadListData(@NotNull ArrayList<Character> characters) {
+        ListFragment listFragment = (ListFragment) getFragmentManager().findFragmentById(R.id.list_fragment_holder);
+        Console.log("SUmi", "Main activity listfragment loading data "+characters.size());
+
+        listFragment.update(characters);
     }
 }

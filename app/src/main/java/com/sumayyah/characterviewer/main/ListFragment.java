@@ -14,6 +14,10 @@ import com.sumayyah.characterviewer.R;
 
 import com.sumayyah.characterviewer.databinding.ListFragmentLayoutBinding;
 import com.sumayyah.characterviewer.main.Adapters.CharacterListAdapter;
+import com.sumayyah.characterviewer.main.Model.Character;
+
+import java.util.ArrayList;
+
 import jp.wasabeef.recyclerview.animators.SlideInUpAnimator;
 
 /**
@@ -42,10 +46,7 @@ public class ListFragment extends Fragment {
         gridLayoutManager = new GridLayoutManager(getActivity(), GRID_VIEW);
         binding.list.setLayoutManager(linearLayoutManager);
 
-        adapter = new CharacterListAdapter(listItemClickListener, getActivity());
-        binding.list.setAdapter(adapter);
-
-        binding.list.setItemAnimator(new SlideInUpAnimator());
+        Console.log("Sumi", "List fragment oncreateview");
 
         return binding.getRoot();
     }
@@ -65,7 +66,24 @@ public class ListFragment extends Fragment {
         binding.list.setLayoutManager(linearLayoutManager);
     }
 
-    public void update() {
+    public void showEmptyView() {
+        Console.log("Sumi", "List fragment shownig empty view");
+
+        binding.list.setVisibility(View.GONE);
+        binding.emptyListView.setVisibility(View.VISIBLE);
+    }
+
+    public void update(ArrayList<Character> characters) {
+        Console.log("Sumi", "List fragment shownig characters "+characters.size());
+
+        if (adapter == null) {
+            adapter = new CharacterListAdapter(listItemClickListener, getActivity(), characters);
+            binding.list.setAdapter(adapter);
+            binding.list.setItemAnimator(new SlideInUpAnimator());
+        }
+
         adapter.notifyDataSetChanged();
+        binding.emptyListView.setVisibility(View.GONE);
+        binding.list.setVisibility(View.VISIBLE);
     }
 }

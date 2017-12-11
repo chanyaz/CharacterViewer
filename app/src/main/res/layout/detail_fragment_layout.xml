@@ -7,9 +7,19 @@
         android:layout_height="match_parent"
         android:background="@color/White">
 
+        <TextView
+                android:id="@+id/emptyDetailView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="All text is empty right now!"
+                android:visibility="visible"/>
+        <!--TODO string format-->
+
         <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+                android:id="@+id/detailView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone">
 
             <LinearLayout
                 android:layout_width="match_parent"

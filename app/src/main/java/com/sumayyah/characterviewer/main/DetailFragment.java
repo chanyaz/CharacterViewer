@@ -19,7 +19,6 @@ import com.sumayyah.characterviewer.main.Managers.DataManager;
  */
 public class DetailFragment extends Fragment {
 
-    private static final int DEFAULT_DETAIL_VIEW = 0;
     private DetailFragmentLayoutBinding binding;
 
 
@@ -29,28 +28,24 @@ public class DetailFragment extends Fragment {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.detail_fragment_layout, container, false);
 
-        //Get position from calling activity, if possible
-        if(getArguments() !=null) {
-            refreshUI(getArguments().getInt("position"));
-        } else {
-            refreshUI(DEFAULT_DETAIL_VIEW);
-        }
-
         return binding.getRoot();
     }
 
-    public void refreshUI(int position) {
+    public void showEmptyView() {
+        binding.emptyDetailView.setVisibility(View.VISIBLE);
+        binding.detailView.setVisibility(View.GONE);
+    }
 
-        if(DataManager.getInstance().getList().size() > 0) {
+    public void showCharacterData(Character c) {
+        binding.characterDetails.setText(c.getDescription());
 
-            Character c = DataManager.getInstance().getList().get(position);
-            binding.characterDetails.setText(c.getDescription());
-
-            if(c.getImageURL().length() > 0) {
-                Picasso.with(getActivity()).load(c.getImageURL()).placeholder(R.drawable.placeholder_profile_pic).into(binding.profilePic);
-            } else {
-                Picasso.with(getActivity()).load(R.drawable.placeholder_profile_pic).placeholder(R.drawable.ic_view_grid).into(binding.profilePic);
-            }
+        if(c.getImageURL().length() > 0) {
+            Picasso.with(getActivity()).load(c.getImageURL()).placeholder(R.drawable.placeholder_profile_pic).into(binding.profilePic);
+        } else {
+            Picasso.with(getActivity()).load(R.drawable.placeholder_profile_pic).placeholder(R.drawable.ic_view_grid).into(binding.profilePic);
         }
+
+        binding.emptyDetailView.setVisibility(View.GONE);
+        binding.detailView.setVisibility(View.VISIBLE);
     }
 }

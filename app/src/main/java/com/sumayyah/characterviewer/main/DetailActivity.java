@@ -8,14 +8,19 @@ import android.widget.Toolbar;
 
 import com.sumayyah.characterviewer.R;
 import com.sumayyah.characterviewer.main.Managers.DataManager;
+import com.sumayyah.characterviewer.main.Model.Character;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Created by sumayyah on 8/10/16.
  */
-public class DetailActivity extends Activity {
+public class DetailActivity extends Activity implements DetailActivityView {
 
     private Toolbar toolbar;
     private DetailFragment detailFragment;
+    private int position;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,14 +32,11 @@ public class DetailActivity extends Activity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setUpActionBar(position);
 
-        if(savedInstanceState == null) {
-
+        if(savedInstanceState == null) { //TODO rotation reload check
             detailFragment = new DetailFragment();
-            Bundle bundle = new Bundle();
-            bundle.putInt("position", position);
-            detailFragment.setArguments(bundle);
             getFragmentManager().beginTransaction().replace(R.id.detail_fragment_holder, detailFragment, "Detail").addToBackStack(null).commit();
         }
+        detailFragment.showEmptyView(); //TODO move into presenter?
     }
 
     private void setUpActionBar(int position) {
@@ -47,6 +49,11 @@ public class DetailActivity extends Activity {
             getActionBar().setTitle(DataManager.getInstance().getList().get(position).getName());
             toolbar.setTitleTextColor(getResources().getColor(R.color.White));
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
     }
 
     @Override
@@ -68,5 +75,10 @@ public class DetailActivity extends Activity {
     public void onBackPressed() {
         super.onBackPressed();
         finishAfterTransition();
+    }
+
+    @Override
+    public void loadCharacterData(@NotNull Character c) {
+        detailFragment.showCharacterData(c);
     }
 }

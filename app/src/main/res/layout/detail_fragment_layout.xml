@@ -4,10 +4,17 @@
         android:id="@+id/detailLayout"
         android:orientation="vertical"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:background="@color/White">
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/emptyView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/empty_detail_message"
+            android:visibility="gone"/>
 
         <ScrollView
+            android:id="@+id/mainDetailView"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 

@@ -14,6 +14,8 @@ import android.view.animation.DecelerateInterpolator;
 import com.squareup.picasso.Picasso;
 import com.sumayyah.characterviewer.R;
 import com.sumayyah.characterviewer.databinding.ListFragmentItemLayoutBinding;
+import com.sumayyah.characterviewer.main.Console;
+import com.sumayyah.characterviewer.main.Data.CharacterRepository;
 import com.sumayyah.characterviewer.main.ListFragment;
 
 import com.sumayyah.characterviewer.main.Model.Character;
@@ -57,32 +59,35 @@ public class CharacterListAdapter extends RecyclerView.Adapter<CharacterListAdap
 
         animateItem(holder.itemView);
 
-        Character c = DataManager.getInstance().getList().get(position);
+        if (getItemCount() > 0) {
 
-        //If grid view, add a profile image
-        if(!isList) {
-            if(c.getImageURL().length() > 0) {
-                Picasso.with(context).load(c.getImageURL()).placeholder(R.drawable.placeholder_profile_pic).into(holder.binding.profilePic);
+            Character c = CharacterRepository.INSTANCE.getAllCharacters().get(position);
+
+            //If grid view, add a profile image
+            if(!isList) {
+                if(c.getImageURL().length() > 0) {
+                    Picasso.with(context).load(c.getImageURL()).placeholder(R.drawable.placeholder_profile_pic).into(holder.binding.profilePic);
+                } else {
+                    Picasso.with(context).load(R.drawable.placeholder_profile_pic).placeholder(R.drawable.ic_view_grid).into(holder.binding.profilePic);
+                }
             } else {
-                Picasso.with(context).load(R.drawable.placeholder_profile_pic).placeholder(R.drawable.ic_view_grid).into(holder.binding.profilePic);
+                holder.binding.profilePic.setVisibility(View.GONE);
             }
-        } else {
-            holder.binding.profilePic.setVisibility(View.GONE);
-        }
 
-        //Set common information
-        holder.binding.characterName.setText(c.getName());
-        holder.binding.cardContentLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                listItemClickListener.onListItemSelected(holder.getAdapterPosition());
-            }
-        });
+            //Set common information
+            holder.binding.characterName.setText(c.getName());
+            holder.binding.cardContentLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listItemClickListener.onListItemSelected(position);
+                }
+            });
+        }
     }
 
     @Override
     public int getItemCount() {
-        return DataManager.getInstance().getList().size();
+        return CharacterRepository.INSTANCE.getAllCharacters().size();
     }
 
 

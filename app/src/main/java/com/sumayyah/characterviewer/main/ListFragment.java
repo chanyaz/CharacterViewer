@@ -6,9 +6,11 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.sumayyah.characterviewer.R;
 
@@ -30,6 +32,10 @@ public class ListFragment extends Fragment {
     private GridLayoutManager gridLayoutManager;
     private ListFragmentLayoutBinding binding;
 
+    public static ListFragment newInstance() {
+        return new ListFragment();
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -44,8 +50,9 @@ public class ListFragment extends Fragment {
 
         adapter = new CharacterListAdapter(listItemClickListener, getActivity());
         binding.list.setAdapter(adapter);
-
         binding.list.setItemAnimator(new SlideInUpAnimator());
+
+        showEmptyView();
 
         return binding.getRoot();
     }
@@ -66,6 +73,21 @@ public class ListFragment extends Fragment {
     }
 
     public void update() {
+        showContent();
         adapter.notifyDataSetChanged();
+    }
+
+    private void showEmptyView() {
+        if (binding.list.getVisibility() == View.VISIBLE) { //TODO is this the most efficient way of doing this?
+            binding.list.setVisibility(View.GONE);
+            binding.emptyView.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void showContent() {
+        if (binding.emptyView.getVisibility() == View.VISIBLE) {
+            binding.list.setVisibility(View.VISIBLE);
+            binding.emptyView.setVisibility(View.GONE);
+        }
     }
 }

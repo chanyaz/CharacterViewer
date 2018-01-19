@@ -8,12 +8,14 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class CharacterRepository { //TODO singleton
+object CharacterRepository { //TODO singleton
 
     private val networkManager = NetworkManager() //TODO Inject
     private val dataTransformer = DataTransformer()
 
-    var characterList : ArrayList<Character>  = ArrayList()
+    private var characterList : ArrayList<Character>  = ArrayList()
+
+    lateinit var listener: OnCompleteListener //TODO replace with RxJava Observable and/or presenters
 
     //get all characters
     fun getAllCharacters() : ArrayList<Character> {
@@ -22,9 +24,11 @@ class CharacterRepository { //TODO singleton
             return fetchCharactersFromApi()
         }
 
-        Console.log("REpository", "Returning "+characterList.size+" characters from local source" )
-
         return characterList
+    }
+
+    fun init() {
+        characterList = fetchCharactersFromApi()
     }
 
     //get a specified character
@@ -42,11 +46,12 @@ class CharacterRepository { //TODO singleton
         val callback = object : Callback<List<RelatedTopic>> {
             override fun onResponse(call: Call<List<RelatedTopic>>, response: Response<List<RelatedTopic>>) {
                 Console.log("REpository", "Completed call, got " + response.body().size + " items")
-                if (response.body().size <= 0) {
+                if (response.body().isEmpty()) {
                     return
                 }
 
                 characterList =  dataTransformer.transform(response.body())
+                listener.onDataComplete()
             }
 
             override fun onFailure(call: Call<List<RelatedTopic>>, t: Throwable) {
@@ -57,5 +62,9 @@ class CharacterRepository { //TODO singleton
         networkManager.createCallForAllData().enqueue(callback)
 
         return characterList
+    }
+
+    interface OnCompleteListener {
+        fun onDataComplete()
     }
 }

@@ -37,7 +37,7 @@ public class ActivityLoadedTestCase extends ActivityInstrumentationTestCase2 {
     public void testDetailViewLoaded() throws Exception {
 
         //If in tablet mode, check Detail fragment is loaded in view
-        ViewInteraction detailFragmentHolder = onView(withId(R.id.detail_fragment_holder));
+        ViewInteraction detailFragmentHolder = onView(withId(R.id.detail_fragment));
         try {
             detailFragmentHolder.check(matches(isDisplayed()));
             onView(withId(R.id.detailLayout)).check(matches(isDisplayed()));

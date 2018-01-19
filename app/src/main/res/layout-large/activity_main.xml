@@ -19,7 +19,7 @@
 
             <!--List view-->
             <FrameLayout
-                android:id="@+id/list_fragment_holder"
+                android:id="@+id/holder"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1" />
@@ -29,9 +29,8 @@
                 android:layout_height="match_parent"
                 />
 
-            <fragment
+            <FrameLayout
                 android:id="@+id/detail_fragment"
-                android:name="com.sumayyah.characterviewer.main.DetailFragment"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="3"/>

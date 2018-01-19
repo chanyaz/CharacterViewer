@@ -2,11 +2,12 @@ package com.sumayyah.characterviewer.main;
 
 import android.app.Activity;
 import android.app.FragmentManager;
-import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toolbar;
 
 import com.sumayyah.characterviewer.R;
@@ -15,20 +16,17 @@ import com.sumayyah.characterviewer.main.Data.CharacterRepository;
 import com.sumayyah.characterviewer.main.Managers.DataManager;
 import com.sumayyah.characterviewer.main.Managers.NetworkManager;
 import com.sumayyah.characterviewer.main.Model.Character;
-import com.sumayyah.characterviewer.main.Network.NetworkUtils;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
-public class MainActivity extends Activity implements ListFragment.ListItemClickListener, NetworkManager.NetworkOpsCompleteListener {
+public class MainActivity extends Activity implements ListFragment.ListItemClickListener, CharacterRepository.OnCompleteListener {
 
     private Toolbar toolbar;
     private Menu menu;
     private boolean isList;
     private boolean isTablet;
     private FragmentManager fragmentManager;
-    private ArrayList<Character> characters;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,29 +41,24 @@ public class MainActivity extends Activity implements ListFragment.ListItemClick
         fragmentManager = getFragmentManager();
 
         fetchData();
-        createRelevantViews();
+        initViews();
     }
 
     private void fetchData() {
-        Console.log("MainActivity", "Fetching data");
-        characters = new CharacterRepository().getAllCharacters();
-        DataManager.getInstance().setCharacterList(characters); //TODO Notify the views that the data has changed
-        //new NetworkManager(networkUtils, this).executeAPICall();
+        CharacterRepository.INSTANCE.setListener(this);
+        CharacterRepository.INSTANCE.init();
     }
 
-    private void createRelevantViews() {
+    private void initViews() {
 
         //Initialize list fragment for both views
-        ListFragment listFragment = (ListFragment) fragmentManager.findFragmentByTag(getString(R.string.list_fragment_tag));
-        if(listFragment == null) {
+        ListFragment listFragment = ListFragment.newInstance();
+        fragmentManager.beginTransaction().replace(R.id.holder, listFragment, "List fragment").commit();
 
-            listFragment = new ListFragment();
-            fragmentManager.beginTransaction().replace(R.id.list_fragment_holder, listFragment, getString(R.string.list_fragment_tag)).commit();
-        }
-
-        //If detail fragment exists, set flag to true
-        if(findViewById(R.id.detail_fragment) != null) {
+        if (findViewById(R.id.detail_fragment) != null) {
             isTablet = true;
+            DetailFragment detailFragment = DetailFragment.newInstance();
+            fragmentManager.beginTransaction().replace(R.id.detail_fragment, detailFragment, "Detail fragment").addToBackStack(null).commit();
         }
     }
 
@@ -104,7 +97,7 @@ public class MainActivity extends Activity implements ListFragment.ListItemClick
 
     private void toggle() {
         MenuItem item = menu.findItem(R.id.action_toggle);
-        ListFragment listFragment = (ListFragment) getFragmentManager().findFragmentById(R.id.list_fragment_holder);
+        ListFragment listFragment = (ListFragment) getFragmentManager().findFragmentById(R.id.holder);
 
         if (isList) {
             listFragment.gridSelected();
@@ -123,28 +116,24 @@ public class MainActivity extends Activity implements ListFragment.ListItemClick
     public void onListItemSelected(int position) {
 
         if(!isTablet) {
-
-            //Detail fragment is not in the phone layout, so start separate Activity
-            //Include index of selected Character
-            Intent intent = new Intent(this, DetailActivity.class);
-            intent.putExtra("position", position);
-            startActivity(intent);
+            DetailFragment detailFragment = DetailFragment.newInstance(position);
+            fragmentManager.beginTransaction().replace(R.id.holder, detailFragment, "Detail fragment").addToBackStack("Detail fragment").commit();
 
         } else {
             //if Detail fragment exists in tablet layout, update
+            fragmentManager.executePendingTransactions();
             DetailFragment detailFragment = (DetailFragment) fragmentManager.findFragmentById(R.id.detail_fragment);
             detailFragment.refreshUI(position);
         }
     }
 
     @Override
-    public void onNetworkOpsComplete() {
-
-        //Refresh UI to reflect that all data is available now
-        ListFragment listFragment = (ListFragment) getFragmentManager().findFragmentById(R.id.list_fragment_holder);
+    public void onDataComplete() {
+        ListFragment listFragment = (ListFragment) fragmentManager.findFragmentById(R.id.holder);
         listFragment.update();
 
-        if(isTablet) {
+        if (isTablet) {
+            //if Detail fragment exists in tablet layout, update
             DetailFragment detailFragment = (DetailFragment) fragmentManager.findFragmentById(R.id.detail_fragment);
             detailFragment.refreshUI(0);
         }

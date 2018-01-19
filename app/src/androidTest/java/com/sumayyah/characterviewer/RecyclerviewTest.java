@@ -6,6 +6,7 @@ import android.support.test.runner.AndroidJUnit4;
 import android.test.AndroidTestCase;
 
 import com.sumayyah.characterviewer.main.Adapters.CharacterListAdapter;
+import com.sumayyah.characterviewer.main.Data.CharacterRepository;
 import com.sumayyah.characterviewer.main.ListFragment;
 import com.sumayyah.characterviewer.main.MainActivity;
 import com.sumayyah.characterviewer.main.Managers.DataManager;
@@ -36,7 +37,7 @@ public class RecyclerviewTest extends AndroidTestCase {
         super.setUp();
 
         mContext = mActivityRule.getActivity().getApplicationContext();
-        characters = DataManager.getInstance().getList();
+        characters = CharacterRepository.INSTANCE.getAllCharacters();
         mAdapter = new CharacterListAdapter(fakeListItemClickListener, mContext);
     }
 

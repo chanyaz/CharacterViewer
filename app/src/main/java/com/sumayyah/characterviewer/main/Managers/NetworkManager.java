@@ -27,19 +27,12 @@ public class NetworkManager {
     private Retrofit retrofit; //TODO inject all these
 
     public NetworkManager() {
-        Console.log("Networkmanager", "Constructor");
         okHttpClient = new OkHttpClientProvider().getClient();
         retrofit = new RetrofitInstanceProvider(new RelatedTopicTypeAdapterFactory(), okHttpClient).getRetrofitInstance();
     }
 
     public Call<List<RelatedTopic>> createCallForAllData() {
-        Console.log("Networkmanager", "Creating call for all data");
-
         Call<List<RelatedTopic>> call = retrofit.create(RetrofitAPIService.class).getAllData();
         return call;
-    }
-
-    public interface NetworkOpsCompleteListener {
-        void onNetworkOpsComplete();
     }
 }

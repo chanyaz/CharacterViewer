@@ -11,39 +11,50 @@ import com.squareup.picasso.Picasso;
 import com.sumayyah.characterviewer.R;
 
 import com.sumayyah.characterviewer.databinding.DetailFragmentLayoutBinding;
+import com.sumayyah.characterviewer.main.Data.CharacterRepository;
 import com.sumayyah.characterviewer.main.Model.Character;
-import com.sumayyah.characterviewer.main.Managers.DataManager;
 
 /**
  * Created by sumayyah on 8/10/16.
  */
 public class DetailFragment extends Fragment {
 
-    private static final int DEFAULT_DETAIL_VIEW = 0;
     private DetailFragmentLayoutBinding binding;
 
+    public static DetailFragment newInstance(int index) {
+        Bundle args = new Bundle();
+        args.putInt("index", index);
+
+        DetailFragment fragment = new DetailFragment();
+        fragment.setArguments(args);
+
+        return fragment;
+    }
+
+    public static DetailFragment newInstance() {
+        return new DetailFragment();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         binding = DataBindingUtil.inflate(inflater, R.layout.detail_fragment_layout, container, false);
 
-        //Get position from calling activity, if possible
-        if(getArguments() !=null) {
-            refreshUI(getArguments().getInt("position"));
-        } else {
-            refreshUI(DEFAULT_DETAIL_VIEW);
+        showEmptyView();
+
+        if(getArguments() !=null && CharacterRepository.INSTANCE.getAllCharacters().size() > 0) {
+            int position = getArguments().getInt("index");
+            refreshUI(position);
         }
 
         return binding.getRoot();
     }
 
     public void refreshUI(int position) {
+        showContent();
+        if(CharacterRepository.INSTANCE.getAllCharacters().size() > 0) {
 
-        if(DataManager.getInstance().getList().size() > 0) {
-
-            Character c = DataManager.getInstance().getList().get(position);
+            Character c = CharacterRepository.INSTANCE.getAllCharacters().get(position);
             binding.characterDetails.setText(c.getDescription());
 
             if(c.getImageURL().length() > 0) {
@@ -51,6 +62,20 @@ public class DetailFragment extends Fragment {
             } else {
                 Picasso.with(getActivity()).load(R.drawable.placeholder_profile_pic).placeholder(R.drawable.ic_view_grid).into(binding.profilePic);
             }
+        }
+    }
+
+    private void showEmptyView() {
+        if (binding.mainDetailView.getVisibility() == View.VISIBLE) { //TODO is this the most efficient way of doing this?
+            binding.mainDetailView.setVisibility(View.GONE);
+            binding.emptyView.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void showContent() {
+        if (binding.emptyView.getVisibility() == View.VISIBLE) {
+            binding.emptyView.setVisibility(View.GONE);
+            binding.mainDetailView.setVisibility(View.VISIBLE);
         }
     }
 }

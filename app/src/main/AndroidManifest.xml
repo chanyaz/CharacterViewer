@@ -22,10 +22,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".main.DetailActivity"
-            android:label="@string/APP_NAME"
-            android:parentActivityName=".main.MainActivity">
-        </activity>
 
     </application>
 

@@ -6,4 +6,7 @@
     <string name="base_api_url">http://api.duckduckgo.com/</string>
     <string name="turn_on_internet_prompt">No internet connection available. Please enable wifi or mobile data to continue.</string>
     <string name="error_dialog_text">"We/'re sorry, some error has occurred. You may have to turn on your internet and try again."</string>
+
+    <string name="empty_list_message">Sorry, list is empty. Try again another time.</string>
+    <string name="empty_detail_message">Sorry, no details. Try again some other time. </string>
 </resources>
